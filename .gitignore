@@ -1,0 +1,8 @@
+*.csv
+*.html
+project1.Rproj
+.RData
+*.rds
+.Rhistory
+.Rproj.user
+*.zip
