@@ -2,9 +2,8 @@
 
 # PLOT 1
 
-# Have total emissions from PM2.5 decreased in the United States from 1999 to
-# 2008? Using the base plotting system, make a plot showing the total PM2.5
-# emission from all sources for each of the years 1999, 2002, 2005, and 2008.
+# Have total emissions from PM2.5 decreased in the Baltimore City, Maryland
+# (`fips` == "24510") from 1999 to 2008?
 
 #
 # Get data
@@ -28,38 +27,42 @@ if (!file.exists("data/Source_Classification_Code.rds") || !file.exists("data/su
 #
 
 nei <- readRDS("data/summarySCC_PM25.rds")
-scc <- readRDS("data/Source_Classification_Code.rds")
 
 #
 # Summarise
 #
 
+# make sure we have packages installed to run analysis
+if (!require("dplyr")) {
+    stop("Required package dplyr missing")
+}
+
+# aggregate emission by year
+# check using (much slower than dplyr)
+# totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
 library(dplyr)
 totals <- nei %>%
+    filter(fips == "24510") %>%
     select(year, Emissions) %>%
     arrange(year) %>%
     group_by(year) %>%
     summarise(total = sum(Emissions))
-#totals1$year <- factor(totals1$year)
-#totals1$type <- factor(totals1$type)
 
-# use aggregate to validate this
-totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
-
-# report total emissions in millions of tons
-totals$total <- totals$total / 10^6
+# use linear regression model for trend analysis
+lmfit <- lm(total ~ year, totals)
 
 #
 # Plot
 #
 
-# plot 1 - plot total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, 2008
-png(filename = "plot1.png", width=480, height=480, units="px")
-x <- with(totals, barplot(total, width = 4, names.arg = year, las = 1, yaxs = "i"))
-text(x, totals$total, labels = round(totals$total, 2), pos = 1, offset = 0.5)
-title(xlab = "Year of Emission")
-title(ylab = "Millons tons")
-title(main = expression(PM[2.5] * " Emission Totals for all sources"))
+# plot total emissions from PM2.5 in the Baltimore City, Maryland from 1999 to 2008
+png(filename = "plot2.png", width=480, height=480, units="px")
+with(totals, plot(year, total, xlab="", ylab="", xaxt = "n", pch = 19))
+with(totals, axis(1, at = year))
+abline(lmfit, col="red")
+title(xlab = "Year of Emissions")
+title(ylab = "Emissions Total (tons)")
+title(main = expression(PM[2.5] * " Total emissions for Baltimore City, Maryland from all sources"))
 dev.off()
 
 #EOF
