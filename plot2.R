@@ -38,8 +38,6 @@ if (!require("dplyr")) {
 }
 
 # aggregate emission by year
-# check using (much slower than dplyr)
-# totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
 library(dplyr)
 totals <- nei %>%
     filter(fips == "24510") %>%
@@ -59,7 +57,7 @@ lmfit <- lm(total ~ year, totals)
 png(filename = "plot2.png", width=480, height=480, units="px")
 with(totals, plot(year, total, xlab="", ylab="", xaxt = "n", pch = 19))
 with(totals, axis(1, at = year))
-abline(lmfit, col="red")
+abline(lmfit, col = "red", lty = 3, lwd = 2)
 title(xlab = "Year of Emissions")
 title(ylab = "Emissions Total (tons)")
 title(main = expression(PM[2.5] * " Total emissions for Baltimore City, Maryland from all sources"))
