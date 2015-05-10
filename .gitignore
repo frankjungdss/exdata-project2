@@ -1,4 +1,5 @@
 *.csv
+data/
 *.html
 project1.Rproj
 .RData
