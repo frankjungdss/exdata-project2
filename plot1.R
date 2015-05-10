@@ -58,7 +58,7 @@ totals$total <- totals$total / 10^6
 # plot total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, 2008
 png(filename = "plot1.png", width=480, height=480, units="px")
 x <- with(totals, barplot(total, width = 4, names.arg = year, las = 1, yaxs = "i"))
-text(x, totals$total, labels = round(totals$total, 2), pos = 1, offset = 0.5)
+with(totals, text(x, total, labels = round(total, 2), pos = 1, offset = 0.5))
 title(xlab = "Year of Emission")
 title(ylab = "Millons tons")
 title(main = expression(PM[2.5] * " Emission totals for all sources"))
