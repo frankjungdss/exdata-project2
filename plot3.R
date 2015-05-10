@@ -57,7 +57,7 @@ totals <- nei %>%
 # Plot
 #
 
-# make sure we have packages installed to run analysis
+# make sure we have packages for plots
 if (!require("ggplot2")) {
     stop("Required package ggplot2 missing")
 }

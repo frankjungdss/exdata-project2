@@ -4,6 +4,7 @@ CONTENTS
 * [Plot 1][]
 * [Plot 2][]
 * [Plot 3][]
+* [Plot 4][]
 
 -----
 
@@ -44,6 +45,16 @@ A linear regression model indicates that only the `point` emission source has
 increased emissions over the years 1999 to 2008.
 
 ![PM[2.5] Emission by source types for Baltimore City, Maryland](plot3.png)
+
+Plot 4
+======
+
+*Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?*
+
+Point emissions from coal combustion-related sources have decreased.
+Non-point emissions from coal combustion-related sources have remained static.
+
+![PM[2.5] Emissions by coal combustion-related sources for United States](plot4.png)
 
 Resources
 =========

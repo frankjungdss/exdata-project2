@@ -37,11 +37,11 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 if (!require("dplyr")) {
     stop("Required package dplyr missing")
 }
+library(dplyr)
 
 # aggregate emission by year
 # check using (much slower than dplyr)
 # totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
-library(dplyr)
 totals <- nei %>%
     select(year, Emissions) %>%
     arrange(year) %>%
@@ -60,7 +60,7 @@ png(filename = "plot1.png", width=480, height=480, units="px")
 x <- with(totals, barplot(total, width = 4, names.arg = year, las = 1, yaxs = "i"))
 with(totals, text(x, total, labels = round(total, 2), pos = 1, offset = 0.5))
 title(xlab = "Year of Emission")
-title(ylab = "Millons tons")
+title(ylab = "Total Emissions (millions tons)")
 title(main = expression(PM[2.5] * " Emission totals for all sources"))
 dev.off()
 
