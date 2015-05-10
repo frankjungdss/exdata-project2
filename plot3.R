@@ -53,6 +53,8 @@ totals <- nei %>%
     group_by(year, type) %>%
     summarise(total = sum(Emissions))
 
+# pollution type is a factor
+totals$type <- factor(tolower(totals$type))
 
 #
 # Plot
@@ -65,10 +67,15 @@ if (!require("ggplot2")) {
 library(ggplot2)
 
 # plot total PM2.5 emissions by source type for Baltimore City, Maryland from years 1999 to 2008
-# png(filename = "plot3.png", width=480, height=480, units="px")
-title(xlab = "Year of Emissions")
-title(ylab = "Emissions Total (tons)")
-title(main = expression(PM[2.5] * " Total emissions for Baltimore City, Maryland from all sources"))
-# dev.off()
+png(filename = "plot3.png", width=640, height=480, units="px")
+g <- ggplot(data = totals, aes(year, total))
+g + geom_point(aes(color = type), size = 4) +
+    geom_smooth(method = "lm", se = FALSE, aes(colour = type)) +
+    theme_light(base_family = "Avenir", base_size = 11) +
+    scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
+    labs(color = "Emission Type") +
+    labs(y = "Total Emissions by Type (tons)") +
+    ggtitle(expression(PM[2.5] * " Total emissions for Baltimore City, Maryland from all sources"))
+dev.off()
 
 #EOF
