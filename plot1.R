@@ -28,20 +28,10 @@ if (!file.exists("data/Source_Classification_Code.rds") || !file.exists("data/su
 #
 
 nei <- readRDS("data/summarySCC_PM25.rds")
-scc <- readRDS("data/Source_Classification_Code.rds")
 
 #
 # Summarise
 #
-
-library(dplyr)
-totals <- nei %>%
-    select(year, Emissions) %>%
-    arrange(year) %>%
-    group_by(year) %>%
-    summarise(total = sum(Emissions))
-#totals1$year <- factor(totals1$year)
-#totals1$type <- factor(totals1$type)
 
 # use aggregate to validate this
 totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
@@ -50,16 +40,16 @@ totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum
 totals$total <- totals$total / 10^6
 
 #
-# Plot
+# Plot 1
 #
 
-# plot 1 - plot total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, 2008
+# plot total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, 2008
 png(filename = "plot1.png", width=480, height=480, units="px")
 x <- with(totals, barplot(total, width = 4, names.arg = year, las = 1, yaxs = "i"))
 text(x, totals$total, labels = round(totals$total, 2), pos = 1, offset = 0.5)
 title(xlab = "Year of Emission")
 title(ylab = "Millons tons")
-title(main = expression(PM[2.5] * " Emission Totals for all sources"))
+title(main = expression(PM[2.5] * " Emission totals for all sources"))
 dev.off()
 
 #EOF
