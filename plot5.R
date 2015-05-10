@@ -1,22 +1,19 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 4
+# PLOT 5
 
-# Across the United States, how have emissions from coal combustion-related
-# sources changed from 1999–2008?
+# How have emissions from motor vehicle sources changed from 1999–2008 in
+# Baltimore City?
 #
-# Sources of coal-combustion can be found in source code classification table (scc)
-# Where coal-combustion sources can be drawn from:
-#   coal <- grep("coal", scc$EI.Sector, ignore.case = T, value = T)
+# Baltimore City, Maryland: `fips` == "24510"
 #
-# The unique coal combustion sources (EI.Sector) are:
-# [1] "Fuel Comb - Electric Generation - Coal"
-# [2] "Fuel Comb - Industrial Boilers, ICEs - Coal"
-# [3] "Fuel Comb - Comm/Institutional - Coal"
-# So need to get all SCC codes that fall into these EI sectors.
+# Motor vehicle sources (EI.Sector) are:
+# [1] Mobile - On-Road Gasoline Light Duty Vehicles
+# [2] Mobile - On-Road Gasoline Heavy Duty Vehicles
+# [3] Mobile - On-Road Diesel Light Duty Vehicles
+# [4] Mobile - On-Road Diesel Heavy Duty Vehicles
 #
-# You can check this with:
-# coalscc <- scc[grep("coal", scc$EI.Sector, ignore.case = T), c("SCC", "Data.Category", "EI.Sector", "Short.Name")]
+vehiclescc <- scc[grep("mobile", scc$EI.Sector, ignore.case = T), c("SCC", "Data.Category", "EI.Sector", "Short.Name")]
 
 #
 # Get data
@@ -54,6 +51,7 @@ if (!require("dplyr")) {
 library(dplyr)
 
 # get SCC (source code classification) digits for coal combustion related sources
+#CHECK coal.scc <- scc[grep("coal", scc$EI.Sector, ignore.case = T), c("SCC", "Data.Category", "EI.Sector", "Short.Name")]
 coalscc <- data.frame(SCC = as.character(scc[grep("coal", scc$EI.Sector, ignore.case = T), "SCC"]))
 
 # aggregate coal emissions by year
@@ -81,8 +79,9 @@ if (!require("scales")) {
 }
 library(scales)
 
-# plot across the United States, how have emissions from coal combustion-related sources changed from years 1999 to 2008?
-png(filename = "plot4.png", width=640, height=480, units="px")
+# plot emissions from motor vehicle sources changed from 1999 to 2008 in
+# Baltimore City
+png(filename = "plot5.png", width=640, height=480, units="px")
 g <- ggplot(data = totals, aes(year, total))
 g + geom_point(aes(color = type), size = 4) +
     geom_smooth(method = "lm", se = FALSE, aes(colour = type)) +

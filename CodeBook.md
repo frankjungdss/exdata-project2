@@ -21,10 +21,10 @@ data that you will use for this assignment are for 1999, 2002, 2005, and 2008.
 Data
 ----
 
-The data for this assignment are available from the course web site as a single
-zip file:
+The data for this project is available from the course web site as a single zip
+file:
 
-[Data for Peer Assessment](https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip) [29Mb]
+[Data Set](https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip) [29Mb]
 
 The zip file contains two files:
 
