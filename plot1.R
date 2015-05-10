@@ -33,8 +33,14 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 # Summarise
 #
 
+# make sure we have packages installed to run analysis
+if (!require("dplyr")) {
+    stop("Required package dplyr missing")
+}
+
 # aggregate emission by year
-#totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
+# check using (much slower than dplyr)
+# totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
 library(dplyr)
 totals <- nei %>%
     select(year, Emissions) %>%
