@@ -46,7 +46,7 @@ totals <- nei %>%
 totals$total <- totals$total / 10^6
 
 #
-# Plot 1
+# Plot
 #
 
 # plot total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, 2008
