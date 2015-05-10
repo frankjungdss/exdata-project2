@@ -40,8 +40,8 @@ nonroad) variable, which of these four sources have seen decreases in emissions
 from 1999–2008 for Baltimore City? Which have seen increases in emissions from
 1999–2008?*
 
-A linear regression model indicates that only the `point` source has increased 
-emissions over the years 1999 to 2008.
+A linear regression model indicates that only the `point` emission source has 
+increased emissions over the years 1999 to 2008.
 
 ![PM[2.5] Emission by source types for Baltimore City, Maryland](plot3.png)
 

@@ -73,7 +73,7 @@ g + geom_point(aes(color = type), size = 4) +
     geom_smooth(method = "lm", se = FALSE, aes(colour = type)) +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
-    labs(color = "Emission Type") +
+    labs(color = "Emission Source Type") +
     labs(y = "Total Emissions (tons)") +
     ggtitle(expression(PM[2.5] * " Total emissions for Baltimore City, Maryland by source type"))
 dev.off()
