@@ -53,9 +53,6 @@ totals <- nei %>%
     group_by(year, type) %>%
     summarise(total = sum(Emissions))
 
-# pollution type is a factor
-totals$type <- factor(tolower(totals$type))
-
 #
 # Plot
 #
