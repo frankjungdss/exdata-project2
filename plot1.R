@@ -33,8 +33,14 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 # Summarise
 #
 
-# use aggregate to validate this
-totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
+# aggregate emission by year
+#totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
+library(dplyr)
+totals <- nei %>%
+    select(year, Emissions) %>%
+    arrange(year) %>%
+    group_by(year) %>%
+    summarise(total = sum(Emissions))
 
 # report total emissions in millions of tons
 totals$total <- totals$total / 10^6
