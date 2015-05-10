@@ -1,9 +1,16 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 2
+# PLOT 3
 
-# Have total emissions from PM2.5 decreased in the Baltimore City, Maryland
-# (`fips` == "24510") from years 1999 to 2008?
+# Of the four types of sources indicated by the type (point, nonpoint, onroad,
+# nonroad) variable:
+#
+# (1) Which of these four sources have seen decreases in emissions from
+#     1999–2008 for Baltimore City?
+#
+# (2) Which have seen increases in emissions from 1999–2008?*
+#
+# Baltimore City, Maryland: `fips` == "24510"
 
 #
 # Get data
@@ -41,26 +48,27 @@ if (!require("dplyr")) {
 library(dplyr)
 totals <- nei %>%
     filter(fips == "24510") %>%
-    select(year, Emissions) %>%
-    arrange(year) %>%
-    group_by(year) %>%
+    select(year, type, Emissions) %>%
+    arrange(year, type) %>%
+    group_by(year, type) %>%
     summarise(total = sum(Emissions))
 
-# use linear regression model for trend analysis
-lmfit <- lm(total ~ year, totals)
 
 #
 # Plot
 #
 
-# plot total emissions from PM2.5 in the Baltimore City, Maryland from years 1999 to 2008
-png(filename = "plot2.png", width=480, height=480, units="px")
-with(totals, plot(year, total, xlab="", ylab="", xaxt = "n", pch = 19))
-with(totals, axis(1, at = year))
-abline(lmfit, col = "red", lty = 3, lwd = 2)
+# make sure we have packages installed to run analysis
+if (!require("ggplot2")) {
+    stop("Required package ggplot2 missing")
+}
+library(ggplot2)
+
+# plot total PM2.5 emissions by source type for Baltimore City, Maryland from years 1999 to 2008
+# png(filename = "plot3.png", width=480, height=480, units="px")
 title(xlab = "Year of Emissions")
 title(ylab = "Emissions Total (tons)")
 title(main = expression(PM[2.5] * " Total emissions for Baltimore City, Maryland from all sources"))
-dev.off()
+# dev.off()
 
 #EOF

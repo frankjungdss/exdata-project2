@@ -3,6 +3,7 @@ CONTENTS
 
 * [Plot 1][]
 * [Plot 2][]
+* [Plot 3][]
 
 -----
 
@@ -27,9 +28,19 @@ Plot 2
 (`fips` == "24510") from 1999 to 2008?*
 
 A linear regression model suggests that the total emissions is decreasing 
-from 1999 to 2008.
+from the years 1999 to 2008.
 
 ![PM[2.5] Emission totals for Baltimore City, Maryland](plot2.png)
+
+Plot 3
+======
+
+*Of the four types of sources indicated by the type (point, nonpoint, onroad,
+nonroad) variable, which of these four sources have seen decreases in emissions
+from 1999–2008 for Baltimore City? Which have seen increases in emissions from
+1999–2008?*
+
+![PM[2.5] Emission by source types for Baltimore City, Maryland](plot3.png)
 
 Resources
 =========
