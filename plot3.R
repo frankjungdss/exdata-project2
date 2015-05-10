@@ -74,8 +74,8 @@ g + geom_point(aes(color = type), size = 4) +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
     labs(color = "Emission Type") +
-    labs(y = "Total Emissions by Type (tons)") +
-    ggtitle(expression(PM[2.5] * " Total emissions for Baltimore City, Maryland from all sources"))
+    labs(y = "Total Emissions (tons)") +
+    ggtitle(expression(PM[2.5] * " Total emissions for Baltimore City, Maryland by sources type"))
 dev.off()
 
 #EOF
