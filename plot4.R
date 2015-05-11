@@ -19,23 +19,6 @@
 # coalscc <- scc[grep("coal", scc$EI.Sector, ignore.case = T), c("SCC", "Data.Category", "EI.Sector", "Short.Name")]
 
 #
-# Get data
-#
-
-# download data
-if (!file.exists("data/NEI_data.zip")) {
-    print("Downloading data ...")
-    fileUrl <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
-    download.file(fileUrl, destfile = "NEI_data.zip", method = "curl", quiet = TRUE)
-    Sys.time()
-}
-
-# unzip data
-if (!file.exists("data/Source_Classification_Code.rds") || !file.exists("data/summarySCC_PM25.rds")) {
-    unzip("data/NEI_data.zip", exdir="data", overwrite = TRUE)
-}
-
-#
 # Load data
 #
 
