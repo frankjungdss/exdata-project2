@@ -2,13 +2,17 @@
 
 # PLOT 5
 
-# How have emissions from motor vehicle sources changed from 1999–2008 in
-# Baltimore City?
+# Compare emissions from motor vehicle sources in Baltimore City with emissions
+# from motor vehicle sources in Los Angeles County, California.
 #
-# Baltimore City, Maryland: `fips` == "24510"
-#
-# Include only mobile motor vehicle sources:
-# vehiclescc <- scc[grepl("Mobile", scc$EI.Sector), c("SCC", "Data.Category", "EI.Sector", "Short.Name")]
+# Which city has seen greater changes over time in motor vehicle emissions?
+# 
+# (a) Baltimore City, Maryland: `fips` == "24510"
+# (b) Los Angeles County, California (fips == # "06037")
+
+# TODO:
+# * get totals for BC and LA
+# * create multi-plot
 
 #
 # Load data
@@ -42,7 +46,7 @@ totals <- nei %>%
 library(ggplot2)
 library(scales)
 
-png(filename = "plot5.png", width = 640, height = 480, units = "px")
+png(filename = "plot6.png", width = 640, height = 480, units = "px")
 g <- ggplot(data = totals, aes(year, total))
 g + geom_point(aes(color = type), size = 4) +
     theme_light(base_family = "Avenir", base_size = 11) +

@@ -42,7 +42,7 @@ library(dplyr)
 # get SCC (source code classification) digits for coal combustion related sources
 coalscc <- as.character(scc[grepl("Coal", scc$EI.Sector), "SCC"])
 
-# aggregate coal emissions by year
+# aggregate emissions by year
 totals <- nei %>%
     filter(SCC %in% coalscc) %>%
     select(year, type, Emissions) %>%
@@ -60,7 +60,6 @@ totals$total <- totals$total / 10^3
 library(ggplot2)
 library(scales)
 
-# plot across the United States, how have emissions from coal combustion-related sources changed from years 1999 to 2008?
 png(filename = "plot4.png", width = 640, height = 480, units = "px")
 g <- ggplot(data = totals, aes(year, total))
 g + geom_point(aes(color = type), size = 4) +

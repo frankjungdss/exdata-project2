@@ -42,7 +42,7 @@ nonroad) variable, which of these four sources have seen decreases in emissions
 from 1999–2008 for Baltimore City? Which have seen increases in emissions from
 1999–2008?*
 
-A linear regression model indicates that only the `point` emission source has
+A linear regression model indicates that only the `point` source has
 increased emissions over the years 1999 to 2008.
 
 ![PM[2.5] Emission by source types for Baltimore City, Maryland](plot3.png)
@@ -64,9 +64,19 @@ Plot 5
 *How have emissions from motor vehicle sources changed from 1999–2008 in
 Baltimore City?*
 
+There has been a reduction in On-Road and Non-Road emissions, but levels of
+point and non-point are now being recorded.
+
+![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot5.png)
+
+Plot 6
+======
+
+*Compare emissions from motor vehicle sources in Baltimore City with emissions from motor vehicle sources in Los Angeles County, California (fips == "06037"). Which city has seen greater changes over time in motor vehicle emissions?*
+
 ***answer***
 
-![PM[2.5] Emissions from motor vehicle sources in Baltimore City]***(plot5.png)***
+![PM[2.5] Emissions from motor vehicle sources in Baltimore City]***(plot6.png)***
 
 Resources
 =========

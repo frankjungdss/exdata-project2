@@ -38,7 +38,6 @@ totals <- nei %>%
 
 library(ggplot2)
 
-# plot total PM2.5 emissions by source type for Baltimore City, Maryland from years 1999 to 2008
 png(filename = "plot3.png", width = 640, height = 480, units = "px")
 g <- ggplot(data = totals, aes(year, total))
 g + geom_point(aes(color = type), size = 4) +

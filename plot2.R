@@ -3,7 +3,9 @@
 # PLOT 2
 
 # Have total emissions from PM2.5 decreased in the Baltimore City, Maryland
-# (`fips` == "24510") from years 1999 to 2008?
+# from years 1999 to 2008?
+#
+# Baltimore City, Maryland: `fips` == "24510"
 
 #
 # Load data
@@ -32,7 +34,6 @@ lmfit <- lm(total ~ year, totals)
 # Plot
 #
 
-# plot total emissions from PM2.5 in the Baltimore City, Maryland from years 1999 to 2008
 png(filename = "plot2.png", width = 480, height = 480, units = "px")
 with(totals, plot(year, total, xlab="", ylab="", xaxt = "n", pch = 19))
 with(totals, axis(1, at = year))
