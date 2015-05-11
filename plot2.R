@@ -15,10 +15,6 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 # Summarise
 #
 
-# make sure we have packages for plots
-if (!require("dplyr")) {
-    stop("Required package dplyr missing")
-}
 library(dplyr)
 
 # aggregate emission by year
@@ -37,13 +33,13 @@ lmfit <- lm(total ~ year, totals)
 #
 
 # plot total emissions from PM2.5 in the Baltimore City, Maryland from years 1999 to 2008
-png(filename = "plot2.png", width=480, height=480, units="px")
+png(filename = "plot2.png", width = 480, height = 480, units = "px")
 with(totals, plot(year, total, xlab="", ylab="", xaxt = "n", pch = 19))
 with(totals, axis(1, at = year))
 abline(lmfit, col = "red", lty = 3, lwd = 2)
 title(xlab = "Year of Emissions")
 title(ylab = "Total Emissions (tons)")
-title(main = expression(PM[2.5] * " Total emissions for Baltimore City, Maryland from all sources"))
+title(main = expression("Baltimore City, Maryland: " * PM[2.5] * " Total Emissions for all Sources"))
 dev.off()
 
 #EOF

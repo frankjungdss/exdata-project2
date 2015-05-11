@@ -16,10 +16,6 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 # Summarise
 #
 
-# make sure we have packages installed to run analysis
-if (!require("dplyr")) {
-    stop("Required package dplyr missing")
-}
 library(dplyr)
 
 # aggregate emission by year
@@ -44,7 +40,7 @@ x <- with(totals, barplot(total, width = 4, names.arg = year, las = 1, yaxs = "i
 with(totals, text(x, total, labels = round(total, 2), pos = 1, offset = 0.5))
 title(xlab = "Year of Emission")
 title(ylab = "Total Emissions (millions tons)")
-title(main = expression(PM[2.5] * " Emission totals for all sources"))
+title(main = expression(PM[2.5] * " Total Emissions for all Sources"))
 dev.off()
 
 #EOF
