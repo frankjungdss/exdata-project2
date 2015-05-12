@@ -35,7 +35,7 @@ lmfit <- lm(total ~ year, totals)
 #
 
 png(filename = "plot2.png", width = 480, height = 480, units = "px")
-with(totals, plot(year, total, xlab="", ylab="", xaxt = "n", pch = 19))
+with(totals, plot(year, total, xlab="", ylab="", xaxt = "n", pch = 19, col = "blue"))
 with(totals, axis(1, at = year))
 abline(lmfit, col = "red", lty = 3, lwd = 2)
 title(xlab = "Year of Emissions")

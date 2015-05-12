@@ -65,6 +65,7 @@ g <- ggplot(data = totals, aes(year, total))
 g + geom_point(aes(color = type), size = 4) +
     geom_smooth(method = "lm", se = FALSE, aes(colour = type)) +
     theme_light(base_family = "Avenir", base_size = 11) +
+    scale_color_brewer(palette = "Set1") +
     scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
     scale_y_continuous(name = "Total Emissions (thousands tons)", breaks = pretty_breaks(n=10)) +
     labs(color = "Emission Source Type") +

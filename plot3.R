@@ -41,8 +41,9 @@ library(ggplot2)
 png(filename = "plot3.png", width = 640, height = 480, units = "px")
 g <- ggplot(data = totals, aes(year, total))
 g + geom_point(aes(color = type), size = 4) +
-    geom_smooth(method = "lm", se = FALSE, aes(colour = type)) +
+    geom_smooth(method = "lm", se = FALSE, aes(color = type)) +
     theme_light(base_family = "Avenir", base_size = 11) +
+    scale_color_brewer(palette = "Set1") +
     scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
     labs(color = "Emission Source Type") +
     labs(y = "Total Emissions (tons)") +
