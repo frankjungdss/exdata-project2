@@ -7,6 +7,7 @@ CONTENTS
 * [Plot 4][]
 * [Plot 5][]
 * [Plot 6][]
+* [Resources][]
 
 -----
 
@@ -23,6 +24,9 @@ The plot below shows that the total emissions from PM2.5 have decreased in the
 United States from 1999 to 2008.
 
 ![PM[2.5] Emission totals for all sources](plot1.png)
+
+![PM[2.5] Emission totals for all sources](plot1-1.png)
+
 
 Plot 2
 ======
@@ -80,7 +84,7 @@ from motor vehicle sources in Los Angeles County, California. Which city has
 seen greater changes over time in motor vehicle emissions?*
 
 * Baltimore City, Maryland (`fips` == "24510")
-* Los Angeles County, California (fips == "06037")
+* Los Angeles County, California (`fips` == "06037")
 
 Baltimore City emission have remained comparatively static compared to the Los
 Angeles County.
@@ -93,3 +97,4 @@ Resources
 * [Project Data Set](https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip) [29Mb]
 * [EPA National Emissions Inventory web site](http://www.epa.gov/ttn/chief/eiinformation.html)
 * [Plot hints](https://www.stat.auckland.ac.nz/~paul/RGraphics/chapter3.html)
+* [An easy way to start using R in your research exploratory data analysis](http://bitesizebio.com/19666/an-easy-way-to-start-using-r-in-your-research-exploratory-data-analysis/)
