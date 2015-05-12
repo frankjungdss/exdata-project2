@@ -144,6 +144,7 @@ xyplot(total ~ year | type + fips,
        xlab = "Year of Emissions",
        ylab = "Total Emissions (tons)",
        main = expression(PM[2.5] * " Emissions from Motor Vehicle Sources"),
+       scales = list(x = list(at = totals$year, labels = totals$year)),
        panel = function(x, y, ...) {
            panel.xyplot(x, y, ...)
            panel.lmline(x, y, col = 2)
