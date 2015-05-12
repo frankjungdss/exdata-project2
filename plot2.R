@@ -27,7 +27,7 @@ totals <- nei %>%
     group_by(year) %>%
     summarise(total = sum(Emissions))
 
-# use linear regression model for trend analysis
+# use linear regression model to show trend
 lmfit <- lm(total ~ year, totals)
 
 #

@@ -10,9 +10,6 @@
 # (a) Baltimore City, Maryland: `fips` == "24510"
 # (b) Los Angeles County, California (fips == # "06037")
 
-# TODO:
-# * get totals for BC and LA
-# * create multi-plot
 
 #
 # Load data

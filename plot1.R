@@ -12,6 +12,17 @@
 
 nei <- readRDS("data/summarySCC_PM25.rds")
 
+totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
+
+png(filename = "plot1-1.png", width=640, height=480, units="px")
+plot(totals$year, totals$total/10^6,
+     xaxt = "n",
+     xlab = "Year",
+     ylab="Total Emissions (millions tons)",
+     main = expression(PM[2.5] * " Total Emissions for all Sources"))
+axis(1, at = totals$year)
+dev.off()
+
 #
 # Summarise
 #
@@ -28,7 +39,7 @@ totals <- nei %>%
     summarise(total = sum(Emissions))
 
 # report total emissions in millions of tons
-totals$total <- totals$total / 10^6
+totals <- transform(totals, total = total / 10^6)
 
 #
 # Plot

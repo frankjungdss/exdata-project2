@@ -50,8 +50,8 @@ totals <- nei %>%
     group_by(year, type) %>%
     summarise(total = sum(Emissions))
 
-# report total emissions in thousands of tons
-totals$total <- totals$total / 10^3
+# report total emissions in thousands of tons, lowercase type for legend
+totals <- transform(totals, total = total / 10^3, type = factor(tolower(type)))
 
 #
 # Plot
