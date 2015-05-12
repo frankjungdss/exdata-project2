@@ -31,11 +31,12 @@ vehiclescc <- as.character(scc[grep("Mobile", scc$EI.Sector), "SCC"])
 totals <- nei %>%
     filter(fips == "06037" | fips == "24510") %>%
     filter(SCC %in% vehiclescc) %>%
-    select(year, fips, Emissions) %>%
-    arrange(year, fips) %>%
-    group_by(year, fips) %>%
-    summarise(total = sum(Emissions))
-totals$fips <- factor(totals$fips, labels = c("Los Angeles County, California", "Baltimore City, Maryland"))
+    select(year, fips, type, Emissions) %>%
+    arrange(year, fips, type) %>%
+    group_by(year, fips, type) %>%
+    summarise(total = sum(Emissions), types = n())
+totals$fips <- factor(totals$fips, labels = c("Los Angeles County", "Baltimore City"))
+totals$type <- factor(totals$type)
 
 #
 # Plot
@@ -43,16 +44,15 @@ totals$fips <- factor(totals$fips, labels = c("Los Angeles County, California", 
 
 library(lattice)
 
-png(filename = "plot6.png", width = 640, height = 480, units = "px")
-xyplot(total ~ year | fips,
+png(filename = "plot6.png", width = 640, height = 640, units = "px")
+xyplot(total ~ year | type + fips,
        data = totals,
-       layout = c(2, 1),
+       layout = c(4, 2),
        col = "blue",
        pch = 19,
        xlab = "Year of Emissions",
        ylab = "Total Emissions (tons)",
        main = expression(PM[2.5] * " Emissions from Motor Vehicle Sources"),
-       scales = list(x = list(at = totals$year, labels = totals$year)),
        panel = function(x, y, ...) {
            panel.xyplot(x, y, ...)
            panel.lmline(x, y, col = 2)
