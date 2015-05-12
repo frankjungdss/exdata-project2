@@ -6,6 +6,7 @@ CONTENTS
 * [Plot 3][]
 * [Plot 4][]
 * [Plot 5][]
+* [Plot 6][]
 
 -----
 
@@ -26,11 +27,13 @@ United States from 1999 to 2008.
 Plot 2
 ======
 
-*Have total emissions from PM2.5 decreased in the Baltimore City, Maryland
-(`fips` == "24510") from 1999 to 2008?*
+*Have total emissions from PM2.5 decreased in the Baltimore City,
+Maryland from 1999 to 2008?*
 
-A linear regression model suggests that the total emissions in Baltimore City 
+A linear regression model suggests that the total emissions in Baltimore City
 have been decreasing from 1999 to 2008.
+
+* Baltimore City, Maryland (`fips` == "24510")
 
 ![PM[2.5] Emission totals for Baltimore City, Maryland](plot2.png)
 
@@ -72,11 +75,17 @@ point and non-point are now being recorded.
 Plot 6
 ======
 
-*Compare emissions from motor vehicle sources in Baltimore City with emissions from motor vehicle sources in Los Angeles County, California (fips == "06037"). Which city has seen greater changes over time in motor vehicle emissions?*
+*Compare emissions from motor vehicle sources in Baltimore City with emissions
+from motor vehicle sources in Los Angeles County, California. Which city has
+seen greater changes over time in motor vehicle emissions?*
 
-***answer***
+* Baltimore City, Maryland (`fips` == "24510")
+* Los Angeles County, California (fips == "06037")
 
-![PM[2.5] Emissions from motor vehicle sources in Baltimore City]***(plot6.png)***
+Baltimore City emission have remained comparatively static compared to the Los
+Angeles County.
+
+![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot6.png)
 
 Resources
 =========

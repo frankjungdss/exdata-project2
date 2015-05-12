@@ -1,6 +1,6 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 5
+# PLOT 6
 
 # Compare emissions from motor vehicle sources in Baltimore City with emissions
 # from motor vehicle sources in Los Angeles County, California.
@@ -27,51 +27,38 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 
 library(dplyr)
 
-# get SCC (source code classification) digits for coal combustion related sources
+# get SCC (source code classification) digits for motor vehicle sources
 vehiclescc <- as.character(scc[grep("Mobile", scc$EI.Sector), "SCC"])
 
 # aggregate emissions by year
-bc <- nei %>%
-    filter(fips == "24510") %>%
+totals <- nei %>%
+    filter(fips == "06037" | fips == "24510") %>%
     filter(SCC %in% vehiclescc) %>%
-    select(year, type, Emissions) %>%
-    arrange(year, type) %>%
-    group_by(year, type) %>%
+    select(year, fips, Emissions) %>%
+    arrange(year, fips) %>%
+    group_by(year, fips) %>%
     summarise(total = sum(Emissions))
-
-la <- nei %>%
-    filter(fips == "06037") %>%
-    filter(SCC %in% vehiclescc) %>%
-    select(year, type, Emissions) %>%
-    arrange(year, type) %>%
-    group_by(year, type) %>%
-    summarise(total = sum(Emissions))
+totals$fips <- factor(totals$fips, labels = c("Los Angeles County, California", "Baltimore City, Maryland"))
 
 #
 # Plot
 #
 
-library(ggplot2)
-library(gridExtra)
-library(scales)
+library(lattice)
 
-#png(filename = "plot6.png", width = 640, height = 480, units = "px")
-gbc <- ggplot(data = bc, aes(year, total))
-gbc + geom_point(aes(color = type), size = 4) +
-    theme_light(base_family = "Avenir", base_size = 11) +
-    scale_x_continuous(name = "Year of Emissions", breaks = bc$year) +
-    scale_y_continuous(name = "Total Emissions (tons)", breaks = pretty_breaks(n=10)) +
-    labs(color = "Emission Source Type") +
-    ggtitle(expression("Baltimore City, Maryland:" * PM[2.5] * " Emissions from Motor Vehicle Sources"))
-
-gla <- ggplot(data = la, aes(year, total))
-gla + geom_point(aes(color = type), size = 4) +
-    theme_light(base_family = "Avenir", base_size = 11) +
-    scale_x_continuous(name = "Year of Emissions", breaks = la$year) +
-    scale_y_continuous(name = "Total Emissions (tons)", breaks = pretty_breaks(n=10)) +
-    labs(color = "Emission Source Type") +
-    ggtitle(expression("Los Angeles County, California:" * PM[2.5] * " Emissions from Motor Vehicle Sources"))
-
-#dev.off()
+png(filename = "plot6.png", width = 640, height = 480, units = "px")
+xyplot(total ~ year | fips,
+       data = totals,
+       layout = c(2, 1),
+       col = "blue",
+       pch = 19,
+       xlab = "Year of Emissions",
+       ylab = "Total Emissions (tons)",
+       main = expression(PM[2.5] * " Emissions from Motor Vehicle Sources"),
+       panel = function(x, y, ...) {
+           panel.xyplot(x, y, ...)
+           panel.lmline(x, y, col = 2)
+       })
+dev.off()
 
 #EOF
