@@ -10,21 +10,15 @@
 # Include only mobile motor vehicle sources:
 # vehiclescc <- scc[grepl("Mobile", scc$EI.Sector), c("SCC", "Data.Category", "EI.Sector", "Short.Name")]
 
-#
-# Load data
-#
+library(dplyr)
+library(ggplot2)
+library(scales)
 
 nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
 
-#
-# Summarise
-#
-
-library(dplyr)
-
-# get SCC (source code classification) digits for coal combustion related sources
-vehiclescc <- as.character(scc[grep("Mobile", scc$EI.Sector), "SCC"])
+# get SCC (source code classification) digits for mobile sources
+vehiclescc <- as.character(scc[grepl("(?=.*Mobile - )(?=.*-Road)", scc$EI.Sector, perl = T), "SCC"])
 
 # aggregate emissions by year
 totals <- nei %>%
@@ -36,22 +30,17 @@ totals <- nei %>%
     summarise(total = sum(Emissions))
 totals <- transform(totals, type = factor(tolower(type)))
 
-#
-# Plot
-#
-
-library(ggplot2)
-library(scales)
-
+# bar chart
 png(filename = "plot5.png", width = 640, height = 480, units = "px")
-g <- ggplot(data = totals, aes(year, total))
-g + geom_point(aes(color = type), size = 4) +
+attach(totals)
+g <- ggplot(data = totals, aes(x = year, y = total, fill = type))
+g + geom_bar(stat = "identity", color = "black", position = "stack") +
     theme_light(base_family = "Avenir", base_size = 11) +
-    scale_color_brewer(palette = "Set1") +
-    scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
+    scale_fill_brewer(palette = "Set1", name = "Emission Source Type") +
+    scale_x_continuous(name = "Year of Emissions", breaks = year) +
     scale_y_continuous(name = "Total Emissions (tons)", breaks = pretty_breaks(n=10)) +
-    labs(color = "Emission Source Type") +
     ggtitle(expression("Baltimore City, Maryland:" * PM[2.5] * " Emissions from Motor Vehicle Sources"))
+detach(totals)
 dev.off()
 
-#EOF
+rm(g, totals, vehiclescc)

@@ -12,17 +12,10 @@
 #
 # Baltimore City, Maryland: `fips` == "24510"
 
-#
-# Load data
-#
+library(dplyr)
+library(ggplot2)
 
 nei <- readRDS("data/summarySCC_PM25.rds")
-
-#
-# Summarise
-#
-
-library(dplyr)
 
 # aggregate emission by year
 totals <- nei %>%
@@ -35,12 +28,7 @@ totals <- nei %>%
 # for legend lowercase the emissions source types
 totals <- transform(totals, type = factor(tolower(type)))
 
-#
-# Plot
-#
-
-library(ggplot2)
-
+# points
 png(filename = "plot3.png", width = 640, height = 480, units = "px")
 g <- ggplot(data = totals, aes(year, total))
 g + geom_point(aes(color = type), size = 4) +
@@ -53,4 +41,4 @@ g + geom_point(aes(color = type), size = 4) +
     ggtitle(expression("Baltimore City, Maryland: " * PM[2.5] * " Total Emissions by Source Type"))
 dev.off()
 
-#EOF
+rm(totals, g)

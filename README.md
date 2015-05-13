@@ -66,6 +66,8 @@ emissions from coal combustion-related sources have remained static.
 
 ![PM[2.5] Emissions from coal combustion-related sources across United States](plot4.png)
 
+![PM[2.5] Emissions from coal combustion-related sources across United States](plot4-1.png)
+
 Plot 5
 ======
 
@@ -76,6 +78,8 @@ There has been a reduction in On-Road and Non-Road emissions, but levels of
 point and non-point are now being recorded.
 
 ![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot5.png)
+
+![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot5-1.png)
 
 Plot 6
 ======
@@ -94,6 +98,7 @@ Emissions from onroad and point sources have increased Los Angeles County.
 Resources
 =========
 
+* [ggplot2 Bar and line graphs](http://www.cookbook-r.com/Graphs/Bar_and_line_graphs_(ggplot2)/)
 * [Project Data Set](https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip) [29Mb]
 * [EPA Inventory Data](http://www.epa.gov/ttn/chief/net/2002inventory.html#inventorydata)
 * [EPA National Emissions Inventory web site](http://www.epa.gov/ttn/chief/eiinformation.html)

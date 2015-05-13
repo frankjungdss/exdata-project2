@@ -72,3 +72,26 @@ Load RDS data with
 scc <- readRDS("data/Source_Classification_Code.rds")
 ```
 
+Notes
+-----
+
+### EIS sectors
+
+One particularly large change from the traditional labeling of sectors and
+categories is for the EIS sectors "Mobile – Aircraft", "Mobile – Commercial
+Marine Vessels", and "Mobile – Locomotives" that are included in EIS as part of
+the point and nonpoint data categories4 rather than the nonroad category. 
+
+NEI users who sum emissions by EIS data category rather than EIS sector should
+be aware that these changes will give differences from historical summaries of
+"nonpoint" and "nonroad" data unless care is taken to assign those emissions to
+the historical grouping. 
+
+Source: [2008_neiv3_tsd_draft.pdf](data/2008_neiv3_tsd_draft.pdf)
+
+### Mobile sources overview
+
+Mobile sources are sources of pollution caused by vehicles transporting goods or people (e.g., highway vehicles,
+aircraft, rail, and marine vessels) and other nonroad engines and equipment, such as lawn and garden
+equipment, construction equipment, engines used in recreational activities, and portable industrial, commercial,
+and agricultural engines. 

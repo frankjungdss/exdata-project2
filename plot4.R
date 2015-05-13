@@ -7,7 +7,7 @@
 #
 # Sources of coal-combustion can be found in source code classification table (scc)
 # Where coal-combustion sources can be drawn from:
-#   coal <- grep("coal", scc$EI.Sector, ignore.case = T, value = T)
+#   unique(scc[grepl("(?=.*Comb)(?=.*Coal)", scc$EI.Sector, perl = T), "EI.Sector"])
 #
 # The unique coal combustion sources (EI.Sector) are:
 # [1] "Fuel Comb - Electric Generation - Coal"
@@ -15,32 +15,16 @@
 # [3] "Fuel Comb - Comm/Institutional - Coal"
 #
 # So need to get all SCC codes that fall into these EI sectors.
-#
-# You can check this with:
-#
-# coalscc <- scc[grepl("coal", scc$EI.Sector, ignore.case = T) & grepl("comb", scc$EI.Sector, ignore.case = T), c("SCC", "Data.Category", "EI.Sector", "Short.Name")]
-# coalscc <- scc[grepl("coal", scc$EI.Sector, ignore.case = T), c("SCC", "Data.Category", "EI.Sector", "Short.Name")]
-#
-# But this is the same as just selecting on "coal" ..
-# And is faster than doing this:
-#
-# coalscc <- scc %>% filter(grepl("Coal", EI.Sector)) %>% select(SCC)
 
-#
-# Load data
-#
+library(dplyr)
+library(ggplot2)
+library(scales)
 
 nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
 
-#
-# Summarise
-#
-
-library(dplyr)
-
 # get SCC (source code classification) digits for coal combustion related sources
-coalscc <- as.character(scc[grepl("Coal", scc$EI.Sector), "SCC"])
+coalscc <- as.character(scc[grepl("(?=.*Comb)(?=.*Coal)", scc$EI.Sector, perl = T), "SCC"])
 
 # aggregate emissions by year
 totals <- nei %>%
@@ -53,23 +37,17 @@ totals <- nei %>%
 # report total emissions in thousands of tons, lowercase type for legend
 totals <- transform(totals, total = total / 10^3, type = factor(tolower(type)))
 
-#
-# Plot
-#
-
-library(ggplot2)
-library(scales)
-
+# bar
 png(filename = "plot4.png", width = 640, height = 480, units = "px")
-g <- ggplot(data = totals, aes(year, total))
-g + geom_point(aes(color = type), size = 4) +
-    geom_smooth(method = "lm", se = FALSE, aes(colour = type)) +
+attach(totals)
+g <- ggplot(data = totals, aes(x = year, y = total, fill = type))
+g + geom_bar(stat = "identity", position = "stack") +
     theme_light(base_family = "Avenir", base_size = 11) +
-    scale_color_brewer(palette = "Set1") +
-    scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
+    scale_fill_brewer(name = "Emission Source Type", palette = "Set1") +
+    scale_x_continuous(name = "Year of Emissions", breaks = year) +
     scale_y_continuous(name = "Total Emissions (thousands tons)", breaks = pretty_breaks(n=10)) +
-    labs(color = "Emission Source Type") +
     ggtitle(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"))
+detach(totals)
 dev.off()
 
-#EOF
+rm(coalscc, g, totals)
