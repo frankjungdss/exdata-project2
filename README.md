@@ -27,6 +27,7 @@ United States from 1999 to 2008.
 
 ![PM[2.5] Emission totals for all sources](plot1-1.png)
 
+![PM[2.5] Emission totals for all sources](plot1-2.png)
 
 Plot 2
 ======
@@ -40,6 +41,8 @@ have been decreasing from 1999 to 2008.
 * Baltimore City, Maryland (`fips` == "24510")
 
 ![PM[2.5] Emission totals for Baltimore City, Maryland](plot2.png)
+
+![PM[2.5] Emission totals for Baltimore City, Maryland](plot2-1.png)
 
 Plot 3
 ======
@@ -95,6 +98,7 @@ Resources
 =========
 
 * [Project Data Set](https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip) [29Mb]
+* [EPA Inventory Data](http://www.epa.gov/ttn/chief/net/2002inventory.html#inventorydata)
 * [EPA National Emissions Inventory web site](http://www.epa.gov/ttn/chief/eiinformation.html)
 * [Plot hints](https://www.stat.auckland.ac.nz/~paul/RGraphics/chapter3.html)
 * [An easy way to start using R in your research exploratory data analysis](http://bitesizebio.com/19666/an-easy-way-to-start-using-r-in-your-research-exploratory-data-analysis/)

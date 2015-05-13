@@ -7,6 +7,7 @@
 nei <- readRDS("data/summarySCC_PM25.rds")
 
 rm(list=setdiff(ls(), c("nei", "scc")))
+while(dev.cur() != 1) dev.off()
 
 ################################################################################
 # PLOT 1
@@ -62,6 +63,7 @@ dev.off()
 #system.time({})
 #user  system elapsed
 #1.332   0.124   1.456 55
+nei <- readRDS("data/summarySCC_PM25.rds")
 totals <- aggregate(Emissions ~ year, data = subset(nei, fips == "24510"), sum)
 lmfit <- lm(Emissions ~ year, totals)
 png(filename = "plot2-1.png", width=640, height=480, units="px")
