@@ -89,10 +89,11 @@ seen greater changes over time in motor vehicle emissions?*
 * Baltimore City, Maryland (`fips` == "24510")
 * Los Angeles County, California (`fips` == "06037")
 
-Baltimore City emission have remained comparatively static compared to the Los
-Angeles County.
+Emissions from onroad and point sources have increased Los Angeles County.
 
 ![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot6.png)
+
+![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot6-1.png)
 
 Resources
 =========

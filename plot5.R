@@ -34,6 +34,7 @@ totals <- nei %>%
     arrange(year, type) %>%
     group_by(year, type) %>%
     summarise(total = sum(Emissions))
+totals <- transform(totals, type = factor(tolower(type)))
 
 #
 # Plot

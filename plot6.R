@@ -10,7 +10,6 @@
 # (a) Baltimore City, Maryland: `fips` == "24510"
 # (b) Los Angeles County, California (fips == # "06037")
 
-
 #
 # Load data
 #
@@ -44,7 +43,7 @@ totals$type <- factor(totals$type)
 
 library(lattice)
 
-png(filename = "plot6.png", width = 640, height = 640, units = "px")
+png(filename = "plot6.png", width = 640, height = 480, units = "px")
 xyplot(total ~ year | type + fips,
        data = totals,
        layout = c(4, 2),

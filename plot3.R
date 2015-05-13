@@ -32,7 +32,7 @@ totals <- nei %>%
     group_by(year, type) %>%
     summarise(total = sum(Emissions))
 
-# lowercase type for legend
+# for legend lowercase the emissions source types
 totals <- transform(totals, type = factor(tolower(type)))
 
 #
