@@ -6,8 +6,7 @@
 
 nei <- readRDS("data/summarySCC_PM25.rds")
 
-torm <- ls()
-remove(list = torm[!torm %in% c("nei", "scc")], torm)
+rm(list=setdiff(ls(), c("nei", "scc")))
 
 ################################################################################
 # PLOT 1
