@@ -74,7 +74,7 @@ dev.off()
 nei <- readRDS("data/summarySCC_PM25.rds")
 totals <- aggregate(Emissions ~ year, data = subset(nei, fips == "24510"), sum)
 lmfit <- lm(Emissions ~ year, totals)
-png(filename = "plot2-1.png", width=640, height=480, units="px")
+png(filename = "plot2-1.png", width=480, height=480, units="px")
 plot(totals$year, totals$Emissions,
      xaxt = "n",
      xlab = "Year",

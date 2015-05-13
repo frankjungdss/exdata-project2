@@ -27,8 +27,6 @@ United States from 1999 to 2008.
 
 ![PM[2.5] Emission totals for all sources](plot1-1.png)
 
-![PM[2.5] Emission totals for all sources](plot1-2.png)
-
 Plot 2
 ======
 
@@ -92,8 +90,6 @@ seen greater changes over time in motor vehicle emissions?*
 Emissions from onroad and point sources have increased Los Angeles County.
 
 ![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot6.png)
-
-![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot6-1.png)
 
 Resources
 =========
