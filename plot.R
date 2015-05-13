@@ -35,6 +35,7 @@ plot(totals$year, totals$total/10^6,
      ylab="Total Emissions (millions tons)",
      main = expression(PM[2.5] * " Total Emissions for all Sources"))
 axis(1, at = totals$year)
+lines(lowess(totals$total/10^6 ~ totals$year), col=4, lwd=2)
 dev.off()
 
 #system.time({})
@@ -73,16 +74,18 @@ dev.off()
 #1.332   0.124   1.456 55
 nei <- readRDS("data/summarySCC_PM25.rds")
 totals <- aggregate(Emissions ~ year, data = subset(nei, fips == "24510"), sum)
+attach(totals)
 lmfit <- lm(Emissions ~ year, totals)
 png(filename = "plot2-1.png", width=480, height=480, units="px")
-plot(totals$year, totals$Emissions,
+plot(year, Emissions,
      xaxt = "n",
      xlab = "Year",
      ylab="Total Emissions (tons)",
      main = expression(PM[2.5] * " Total Emissions for Baltimore City, Maryland"))
-axis(1, at = totals$year)
+axis(1, at = year)
 abline(lmfit, lty = 3, lwd = 2)
 dev.off()
+detach(totals)
 
 ################################################################################
 # PLOT 3
@@ -129,11 +132,12 @@ totals <- nei %>%
     group_by(year, fips, type) %>%
     summarise(total = sum(Emissions))
 totals$fips <- factor(totals$fips, labels = c("Los Angeles County", "Baltimore City"))
-totals$type <- factor(tolower(totals$type)
+totals$type <- factor(tolower(totals$type))
 
 library(lattice)
 
-png(filename = "plot6-1.png", width = 640, height = 480, units = "px")
+png(filename = "plot6.png", width = 640, height = 480, units = "px")
+attach(totals)
 xyplot(total ~ year | type + fips,
        data = totals,
        layout = c(4, 2),
@@ -142,9 +146,10 @@ xyplot(total ~ year | type + fips,
        xlab = "Year of Emissions",
        ylab = "Total Emissions (tons)",
        main = expression(PM[2.5] * " Emissions from motor vehicle sources for selected locations"),
-       scales = list(x = list(at = totals$year, labels = totals$year)),
+       scales = list(x = list(at = year, labels = year)),
        panel = function(x, y, ...) {
            panel.xyplot(x, y, ...)
            panel.lmline(x, y, col = 2)
        })
+detach(totals)
 dev.off()
