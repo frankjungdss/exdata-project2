@@ -1,13 +1,18 @@
 #!/usr/bin/R --verbose --quiet
 
 #
+# Clean workspace
+#
+
+rm(list=setdiff(ls(), c("nei", "scc")))
+while(dev.cur() != 1) dev.off()
+
+#
 # Load data
 #
 
 nei <- readRDS("data/summarySCC_PM25.rds")
-
-rm(list=setdiff(ls(), c("nei", "scc")))
-while(dev.cur() != 1) dev.off()
+scc <- readRDS("data/Source_Classification_Code.rds")
 
 ################################################################################
 # PLOT 1
@@ -23,7 +28,7 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 #user  system elapsed
 #8.700   0.292   8.984
 totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
-png(filename = "plot1-1.png", width=640, height=480, units="px")
+png(filename = "plot1-1.png", width=480, height=480, units="px")
 plot(totals$year, totals$total/10^6,
      xaxt = "n",
      xlab = "Year",
@@ -36,18 +41,21 @@ dev.off()
 #user  system elapsed
 #1.952   0.008   1.958
 library(dplyr)
+
 totals <- nei %>%
     select(year, Emissions) %>%
     arrange(year) %>%
     group_by(year) %>%
     summarise(total = sum(Emissions))
-png(filename = "plot1-2.png", width=640, height=480, units="px")
-plot(totals$year, totals$total/10^6,
-     xaxt = "n",
-     xlab = "Year",
-     ylab="Total Emissions (millions tons)",
-     main = expression(PM[2.5] * " Total Emissions for all Sources"))
-axis(1, at = totals$year)
+# report total emissions in millions of tons
+totals <- transform(totals, total = total / 10^6)
+
+png(filename = "plot1-2.png", width=480, height=480, units="px")
+x <- with(totals, barplot(total, width = 4, names.arg = year, las = 1, yaxs = "i"))
+with(totals, text(x, total, labels = round(total, 2), pos = 1, offset = 0.5))
+title(xlab = "Year of Emission")
+title(ylab = "Total Emissions (millions tons)")
+title(main = expression(PM[2.5] * " Total Emissions for all Sources"))
 dev.off()
 
 
