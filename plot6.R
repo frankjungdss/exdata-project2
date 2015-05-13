@@ -35,7 +35,7 @@ totals <- nei %>%
     group_by(year, fips, type) %>%
     summarise(total = sum(Emissions), types = n())
 totals$fips <- factor(totals$fips, labels = c("Los Angeles County", "Baltimore City"))
-totals$type <- factor(totals$type)
+totals$type <- factor(tolower(totals$type))
 
 #
 # Plot
@@ -49,9 +49,9 @@ xyplot(total ~ year | type + fips,
        layout = c(4, 2),
        col = "blue",
        pch = 19,
-       xlab = "Year",
+       xlab = "Year of Emissions",
        ylab = "Total Emissions (tons)",
-       main = expression(PM[2.5] * " Emissions from Motor Vehicle Sources"),
+       main = expression(PM[2.5] * " Emissions from motor vehicle sources for selected locations"),
        scales = list(x = list(at = totals$year, labels = totals$year)),
        panel = function(x, y, ...) {
            panel.xyplot(x, y, ...)
