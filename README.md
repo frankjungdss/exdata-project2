@@ -66,7 +66,7 @@ emissions from coal combustion-related sources have remained static.
 
 ![PM[2.5] Emissions from coal combustion-related sources across United States](plot4b.png)
 
-Over reduction in mean of coal combustion-related emissions and less variation per year.
+A reduction in coal combustion-related emissions mean and less variation over time.
 
 ![PM[2.5] Emissions from coal combustion-related sources across United States](plot4c.png)
 
