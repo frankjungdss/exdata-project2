@@ -1,6 +1,6 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 6-1
+# PLOT 6b
 
 # Compare emissions from motor vehicle sources in Baltimore City with emissions
 # from motor vehicle sources in Los Angeles County, California.
@@ -30,7 +30,7 @@ totals <- nei %>%
 totals$fips <- factor(totals$fips, labels = c("Los Angeles County", "Baltimore City"))
 
 # points
-png(filename = "plot6-1.png", width = 640, height = 480, units = "px")
+png(filename = "plot6b.png", width = 640, height = 480, units = "px")
 attach(totals)
 g <- ggplot(totals, aes(x = year, y = mean)) +
     geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd), width=.2) +

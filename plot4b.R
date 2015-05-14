@@ -1,6 +1,6 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 4
+# PLOT 4b
 
 # Across the United States, how have emissions from coal combustion-related
 # sources changed from 1999–2008?
@@ -37,15 +37,17 @@ totals <- nei %>%
 # report total emissions in thousands of tons, lowercase type for legend
 totals <- transform(totals, total = total / 10^3, type = factor(tolower(type)))
 
-# bar
-png(filename = "plot4.png", width = 640, height = 480, units = "px")
+# points
+png(filename = "plot4b.png", width = 640, height = 480, units = "px")
 attach(totals)
-g <- ggplot(data = totals, aes(x = year, y = total, fill = type))
-g + geom_bar(stat = "identity", position = "stack") +
+g <- ggplot(data = totals, aes(year, total))
+g + geom_point(aes(color = type), size = 4) +
+    # geom_smooth(method = "lm", se = FALSE, aes(colour = type)) +
     theme_light(base_family = "Avenir", base_size = 11) +
-    scale_fill_brewer(name = "Emission Source Type", palette = "Set1") +
+    scale_color_brewer(palette = "Set1") +
     scale_x_continuous(name = "Year of Emissions", breaks = year) +
     scale_y_continuous(name = "Total Emissions (thousands tons)", breaks = pretty_breaks(n=10)) +
+    labs(color = "Emission Source Type") +
     ggtitle(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"))
 detach(totals)
 dev.off()

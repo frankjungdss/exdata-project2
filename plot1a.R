@@ -1,6 +1,6 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 1
+# PLOT 1a
 
 # Have total emissions from PM2.5 decreased in the United States from 1999 to
 # 2008? Using the base plotting system, make a plot showing the total PM2.5
@@ -21,7 +21,7 @@ totals <- nei %>%
 totals <- transform(totals, total = total / 10^6)
 
 # bar chart
-png(filename = "plot1.png", width=480, height=480, units="px")
+png(filename = "plot1a.png", width=480, height=480, units="px")
 x <- with(totals, barplot(total, width = 4, names.arg = year, las = 1, yaxs = "i"))
 with(totals, text(x, total, labels = round(total, 2), pos = 1, offset = 0.5))
 title(xlab = "Year of Emissions")

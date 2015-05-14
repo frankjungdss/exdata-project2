@@ -1,6 +1,6 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 5
+# PLOT 5a
 
 # How have emissions from motor vehicle sources changed from 1999–2008 in
 # Baltimore City?
@@ -30,15 +30,16 @@ totals <- nei %>%
     summarise(total = sum(Emissions))
 totals <- transform(totals, type = factor(tolower(type)))
 
-# bar chart
-png(filename = "plot5.png", width = 640, height = 480, units = "px")
+# points
+png(filename = "plot5a.png", width = 640, height = 480, units = "px")
 attach(totals)
-g <- ggplot(data = totals, aes(x = year, y = total, fill = type))
-g + geom_bar(stat = "identity", color = "black", position = "stack") +
+g <- ggplot(data = totals, aes(year, total))
+g + geom_point(aes(color = type), size = 4) +
     theme_light(base_family = "Avenir", base_size = 11) +
-    scale_fill_brewer(palette = "Set1", name = "Emission Source Type") +
+    scale_color_brewer(palette = "Set1") +
     scale_x_continuous(name = "Year of Emissions", breaks = year) +
     scale_y_continuous(name = "Total Emissions (tons)", breaks = pretty_breaks(n=10)) +
+    labs(color = "Emission Source Type") +
     ggtitle(expression("Baltimore City, Maryland:" * PM[2.5] * " Emissions from Motor Vehicle Sources"))
 detach(totals)
 dev.off()

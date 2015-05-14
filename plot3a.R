@@ -1,6 +1,6 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 3
+# PLOT 3a
 
 # Of the four types of sources indicated by the type (point, nonpoint, onroad,
 # nonroad) variable:
@@ -29,14 +29,15 @@ totals <- nei %>%
 totals <- transform(totals, type = factor(tolower(type)))
 
 # points
-png(filename = "plot3.png", width = 640, height = 480, units = "px")
+png(filename = "plot3a.png", width = 640, height = 480, units = "px")
 g <- ggplot(data = totals, aes(year, total))
-g + geom_point(aes(color = type), size = 4) +
+g + geom_point(aes(color = type, shape = type), size = 5) +
+    scale_shape_manual(values = c(15, 17, 18, 19)) +
     geom_smooth(method = "lm", se = FALSE, aes(color = type)) +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_color_brewer(palette = "Set1") +
     scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
-    labs(color = "Emission Source Type") +
+    labs(shape = "Emission Source Type", color = "Emission Source Type") +
     labs(y = "Total Emissions (tons)") +
     ggtitle(expression("Baltimore City, Maryland: " * PM[2.5] * " Total Emissions by Source Type"))
 dev.off()

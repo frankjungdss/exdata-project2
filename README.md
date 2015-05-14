@@ -40,8 +40,6 @@ have been decreasing from 1999 to 2008.
 
 ![PM[2.5] Emission totals for Baltimore City, Maryland](plot2.png)
 
-![PM[2.5] Emission totals for Baltimore City, Maryland](plot2-1.png)
-
 Plot 3
 ======
 
@@ -81,8 +79,6 @@ Baltimore City?*
 There has been an overall reduction in motor vehicle emissions.
 
 ![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot5.png)
-
-![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot5-1.png)
 
 Plot 6
 ======

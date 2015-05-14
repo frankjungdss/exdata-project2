@@ -1,6 +1,6 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 6
+# PLOT 6a
 
 # Compare emissions from motor vehicle sources in Baltimore City with emissions
 # from motor vehicle sources in Los Angeles County, California.
@@ -31,7 +31,7 @@ totals$fips <- factor(totals$fips, labels = c("Los Angeles County", "Baltimore C
 totals$type <- factor(tolower(totals$type))
 
 # lattice
-png(filename = "plot6.png", width = 640, height = 480, units = "px")
+png(filename = "plot6a.png", width = 640, height = 480, units = "px")
 attach(totals)
 xyplot(total ~ year | type + fips,
        data = totals,
@@ -49,4 +49,4 @@ xyplot(total ~ year | type + fips,
 detach(totals)
 dev.off()
 
-rm(vehiclescc,totals)
+rm(vehiclescc, totals)

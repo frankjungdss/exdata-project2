@@ -1,6 +1,6 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 4-2
+# PLOT 4c
 
 # Across the United States, how have emissions from coal combustion-related
 # sources changed from 1999–2008?
@@ -33,7 +33,7 @@ totals <- nei %>%
     group_by(year) %>%
     summarise(mean = mean(Emissions), sd = sd(Emissions))
 
-png(filename = "plot4-2.png", width = 640, height = 480, units = "px")
+png(filename = "plot4c.png", width = 640, height = 480, units = "px")
 attach(totals)
 par(mfrow = c(1, 2), mar = c(4, 5, 1, 1), oma = c(0, 0, 2, 0))
 # means
