@@ -68,14 +68,17 @@ emissions from coal combustion-related sources have remained static.
 
 ![PM[2.5] Emissions from coal combustion-related sources across United States](plot4-1.png)
 
+Over reduction in mean of coal combustion-related emissions and less variation per year.
+
+![PM[2.5] Emissions from coal combustion-related sources across United States](plot4-2.png)
+
 Plot 5
 ======
 
 *How have emissions from motor vehicle sources changed from 1999–2008 in
 Baltimore City?*
 
-There has been a reduction in On-Road and Non-Road emissions, but levels of
-point and non-point are now being recorded.
+There has been an overall reduction in motor vehicle emissions.
 
 ![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot5.png)
 
@@ -91,13 +94,17 @@ seen greater changes over time in motor vehicle emissions?*
 * Baltimore City, Maryland (`fips` == "24510")
 * Los Angeles County, California (`fips` == "06037")
 
-Emissions from onroad and point sources have increased Los Angeles County.
+Los Angeles County has seen seen the greatest fluctuation in emissions.
 
 ![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot6.png)
+
+![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot6-1.png)
 
 Resources
 =========
 
+* [EPA Emission Basics](http://www.epa.gov/air/emissions/basic.htm)
+* [EPA FIPS State Codes](http://www.epa.gov/envirofw/html/codes/state.html)
 * [ggplot2 Bar and line graphs](http://www.cookbook-r.com/Graphs/Bar_and_line_graphs_(ggplot2)/)
 * [Project Data Set](https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip) [29Mb]
 * [EPA Inventory Data](http://www.epa.gov/ttn/chief/net/2002inventory.html#inventorydata)

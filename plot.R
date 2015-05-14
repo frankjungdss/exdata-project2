@@ -15,8 +15,10 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
 
 #
-# get some stats from nei
+# EXPLORE
 #
+
+# get some stats from nei
 names(nei) <- tolower(names(nei))
 
 # TYPES
@@ -50,6 +52,9 @@ sccs <- factor(nei$scc)
 summary(sccs)
 plot(table(sccs))
 
+# STATES
+states <- substr(nei$fips,1, 2)
+
 # EMISSIONS
 emissions <- nei$emissions
 summary(emissions)
@@ -81,6 +86,8 @@ mobile
 # 2008? Using the base plotting system, make a plot showing the total PM2.5
 # emission from all sources for each of the years 1999, 2002, 2005, and 2008.
 
+#-------------------------------------------------------------------------------
+
 nei <- readRDS("data/summarySCC_PM25.rds")
 
 totals <- aggregate(list(total = nei$Emissions), by = list(year = nei$year), sum)
@@ -91,10 +98,16 @@ plot(totals$year, totals$total/10^6,
      ylab="Total Emissions (millions tons)",
      main = expression(PM[2.5] * " Total Emissions for all Sources"))
 axis(1, at = totals$year)
-lines(lowess(totals$total/10^6 ~ totals$year), col=4, lwd=2)
+# lines(lowess(totals$total/10^6 ~ totals$year), col=4, lwd=2)
 dev.off()
 
+rm(totals)
+
+#-------------------------------------------------------------------------------
+
 library(dplyr)
+
+nei <- readRDS("data/summarySCC_PM25.rds")
 
 totals <- nei %>%
     select(year, Emissions) %>%
@@ -104,7 +117,7 @@ totals <- nei %>%
 # report total emissions in millions of tons
 totals <- transform(totals, total = total / 10^6)
 
-png(filename = "plot1-1.png", width=480, height=480, units="px")
+png(filename = "plot1-2.png", width=480, height=480, units="px")
 x <- with(totals, barplot(total, width = 4, names.arg = year, las = 1, yaxs = "i"))
 with(totals, text(x, total, labels = round(total, 2), pos = 1, offset = 0.5))
 title(xlab = "Year of Emissions")
@@ -156,7 +169,36 @@ rm(totals)
 #
 # Baltimore City, Maryland: `fips` == "24510"
 
-print("STILL TO DO")
+library(dplyr)
+library(ggplot2)
+
+nei <- readRDS("data/summarySCC_PM25.rds")
+
+# aggregate emission by year
+totals <- nei %>%
+    filter(fips == "24510") %>%
+    select(year, type, Emissions) %>%
+    arrange(year, type) %>%
+    group_by(year, type) %>%
+    summarise(total = sum(Emissions))
+
+# for legend lowercase the emissions source types
+totals <- transform(totals, type = factor(tolower(type)))
+
+# points
+png(filename = "plot3.png", width = 640, height = 480, units = "px")
+g <- ggplot(data = totals, aes(year, total))
+g + geom_point(aes(color = type), size = 4) +
+    geom_smooth(method = "lm", se = FALSE, aes(color = type)) +
+    theme_light(base_family = "Avenir", base_size = 11) +
+    scale_color_brewer(palette = "Set1") +
+    scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
+    labs(color = "Emission Source Type") +
+    labs(y = "Total Emissions (tons)") +
+    ggtitle(expression("Baltimore City, Maryland: " * PM[2.5] * " Total Emissions by Source Type"))
+dev.off()
+
+rm(g, totals)
 
 ################################################################################
 # PLOT 4
@@ -250,8 +292,8 @@ detach(totals)
 dev.off()
 
 # points
-attach(totals)
 png(filename = "plot5-2.png", width = 640, height = 480, units = "px")
+attach(totals)
 g <- ggplot(data = totals, aes(year, total))
 g + geom_point(aes(color = type), size = 4) +
     theme_light(base_family = "Avenir", base_size = 11) +
@@ -260,8 +302,8 @@ g + geom_point(aes(color = type), size = 4) +
     scale_y_continuous(name = "Total Emissions (tons)", breaks = pretty_breaks(n=10)) +
     labs(color = "Emission Source Type") +
     ggtitle(expression("Baltimore City, Maryland:" * PM[2.5] * " Emissions from Motor Vehicle Sources"))
-dev.off()
 detach(totals)
+dev.off()
 
 rm(g, totals, vehiclescc)
 
@@ -284,7 +326,7 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
 
 # get SCC (source code classification) digits for motor vehicle sources
-vehiclescc <- as.character(scc[grep("Mobile", scc$EI.Sector), "SCC"])
+vehiclescc <- as.character(scc[grepl("(?=.*Mobile - )(?=.*-Road)", scc$EI.Sector, perl = T), "SCC"])
 
 # aggregate emissions by year
 totals <- nei %>%
@@ -299,11 +341,12 @@ totals <- nei %>%
 totals$fips <- factor(totals$fips, labels = c("Los Angeles County", "Baltimore City"))
 totals$type <- factor(tolower(totals$type))
 
+# points
 png(filename = "plot6-1.png", width = 640, height = 480, units = "px")
 attach(totals)
 xyplot(total ~ year | type + fips,
        data = totals,
-       layout = c(4, 2),
+       layout = c(3, 2),
        col = "blue",
        pch = 19,
        xlab = "Year of Emissions",

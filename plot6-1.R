@@ -1,6 +1,6 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 6
+# PLOT 6-1
 
 # Compare emissions from motor vehicle sources in Baltimore City with emissions
 # from motor vehicle sources in Los Angeles County, California.
@@ -11,7 +11,7 @@
 # (b) Los Angeles County, California (fips == # "06037")
 
 library(dplyr)
-library(lattice)
+library(ggplot2)
 
 nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
@@ -23,30 +23,23 @@ vehiclescc <- as.character(scc[grepl("(?=.*Mobile - )(?=.*-Road)", scc$EI.Sector
 totals <- nei %>%
     filter(fips == "06037" | fips == "24510") %>%
     filter(SCC %in% vehiclescc) %>%
-    select(year, fips, type, Emissions) %>%
-    arrange(year, fips, type) %>%
-    group_by(year, fips, type) %>%
-    summarise(total = sum(Emissions), types = n())
+    select(year, fips, Emissions) %>%
+    arrange(year, fips) %>%
+    group_by(year, fips) %>%
+    summarise(mean = mean(Emissions), sd = sd(Emissions))
 totals$fips <- factor(totals$fips, labels = c("Los Angeles County", "Baltimore City"))
-totals$type <- factor(tolower(totals$type))
 
-# lattice
-png(filename = "plot6.png", width = 640, height = 480, units = "px")
+# points
+png(filename = "plot6-1.png", width = 640, height = 480, units = "px")
 attach(totals)
-xyplot(total ~ year | type + fips,
-       data = totals,
-       layout = c(3, 2),
-       col = "blue",
-       pch = 19,
-       xlab = "Year of Emissions",
-       ylab = "Total Emissions (tons)",
-       main = expression(PM[2.5] * " Emissions from motor vehicle sources for selected locations"),
-       scales = list(x = list(at = year, labels = year)),
-       panel = function(x, y, ...) {
-           panel.xyplot(x, y, ...)
-           panel.lmline(x, y, col = 2)
-       })
+g <- ggplot(totals, aes(x = year, y = mean)) +
+    geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd), width=.2) +
+    geom_point(size = 4) +
+    scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
+    labs(y = "Mean Emissions (tons)") +
+    ggtitle(expression(PM[2.5] * " Emissions from motor vehicle sources by county"))
+g + facet_grid(fips ~ ., scales = "free")
 detach(totals)
 dev.off()
 
-rm(vehiclescc,totals)
+rm(g, totals, vehiclescc)
