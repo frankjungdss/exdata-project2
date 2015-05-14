@@ -80,6 +80,8 @@ There has been an overall reduction in motor vehicle emissions.
 
 ![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot5a.png)
 
+![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot5b.png)
+
 Plot 6
 ======
 

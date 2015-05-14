@@ -40,7 +40,7 @@ totals <- transform(totals, total = total / 10^3, type = factor(tolower(type)))
 # bar
 png(filename = "plot4a.png", width = 640, height = 480, units = "px")
 attach(totals)
-g <- ggplot(data = totals, aes(x = year, y = total, fill = type))
+g <- ggplot(data = totals, aes(year, total, fill = type))
 g + geom_bar(stat = "identity", position = "stack") +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_fill_brewer(name = "Emission Source Type", palette = "Set1") +
