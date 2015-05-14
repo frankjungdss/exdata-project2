@@ -23,9 +23,9 @@ the years 1999, 2002, 2005, and 2008.
 The plot below shows that the total emissions from PM2.5 have decreased in the
 United States from 1999 to 2008.
 
-![PM[2.5] Emission totals for all sources](plot1.png)
+![PM[2.5] Emission totals for all sources](plot1a.png)
 
-![PM[2.5] Emission totals for all sources](plot1-1.png)
+![PM[2.5] Emission totals for all sources](plot1b.png)
 
 Plot 2
 ======
@@ -38,7 +38,7 @@ have been decreasing from 1999 to 2008.
 
 * Baltimore City, Maryland (`fips` == "24510")
 
-![PM[2.5] Emission totals for Baltimore City, Maryland](plot2.png)
+![PM[2.5] Emission totals for Baltimore City, Maryland](plot2a.png)
 
 Plot 3
 ======
@@ -51,7 +51,7 @@ from 1999–2008 for Baltimore City? Which have seen increases in emissions from
 A linear regression model indicates that only the `point` source has
 increased emissions over the years 1999 to 2008.
 
-![PM[2.5] Emission by source types for Baltimore City, Maryland](plot3.png)
+![PM[2.5] Emission by source types for Baltimore City, Maryland](plot3a.png)
 
 Plot 4
 ======
@@ -62,13 +62,13 @@ sources changed from 1999–2008?*
 Point emissions from coal combustion-related sources have decreased. Non-point
 emissions from coal combustion-related sources have remained static.
 
-![PM[2.5] Emissions from coal combustion-related sources across United States](plot4.png)
+![PM[2.5] Emissions from coal combustion-related sources across United States](plot4a.png)
 
-![PM[2.5] Emissions from coal combustion-related sources across United States](plot4-1.png)
+![PM[2.5] Emissions from coal combustion-related sources across United States](plot4b.png)
 
 Over reduction in mean of coal combustion-related emissions and less variation per year.
 
-![PM[2.5] Emissions from coal combustion-related sources across United States](plot4-2.png)
+![PM[2.5] Emissions from coal combustion-related sources across United States](plot4c.png)
 
 Plot 5
 ======
@@ -78,7 +78,7 @@ Baltimore City?*
 
 There has been an overall reduction in motor vehicle emissions.
 
-![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot5.png)
+![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot5a.png)
 
 Plot 6
 ======
@@ -92,9 +92,9 @@ seen greater changes over time in motor vehicle emissions?*
 
 Los Angeles County has seen seen the greatest fluctuation in emissions.
 
-![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot6.png)
+![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot6a.png)
 
-![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot6-1.png)
+![PM[2.5] Emissions from motor vehicle sources in Baltimore City](plot6b.png)
 
 Resources
 =========
