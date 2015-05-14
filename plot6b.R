@@ -34,6 +34,7 @@ png(filename = "plot6b.png", width = 640, height = 480, units = "px")
 attach(totals)
 g <- ggplot(totals, aes(x = year, y = mean)) +
     geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd), width=.2) +
+    # geom_smooth(method = lm, se = FALSE) +
     geom_point(size = 4) +
     scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
     labs(y = "Mean Emissions (tons)") +
