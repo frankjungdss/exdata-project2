@@ -28,6 +28,7 @@ coalscc <- as.character(scc[grepl("(?=.*Comb)(?=.*Coal)", scc$EI.Sector, perl = 
 # mean emissions by year
 # aggregate emission by year
 totals <- nei %>%
+    filter(SCC %in% coalscc) %>%
     select(year, Emissions) %>%
     arrange(year) %>%
     group_by(year) %>%

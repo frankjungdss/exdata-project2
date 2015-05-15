@@ -70,6 +70,8 @@ A reduction in coal combustion-related emissions mean and less variation over ti
 
 ![PM[2.5] Emissions from coal combustion-related sources across United States](plot4c.png)
 
+![PM[2.5] Emissions from coal combustion-related sources across United States](plot4d.png)
+
 Plot 5
 ======
 
