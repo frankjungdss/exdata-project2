@@ -40,7 +40,7 @@ g + geom_point(aes(color = fips), size = 3) +
     scale_color_brewer(palette = "Set1") +
     scale_x_continuous(name = "Year", breaks = year) +
     labs(y = "Total Emissions (normalised)") +
-    ggtitle(expression(PM[2.5] * " Scaled Emissions from Motor Vehicle Sources selected locations"))
+    ggtitle(expression(PM[2.5] * " Scaled Emissions from Motor Vehicle Sources"))
 detach(totals)
 dev.off()
 
