@@ -30,8 +30,8 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 # get SCC (source code classification) digits for coal combustion related sources
 coalscc <- as.character(scc[grepl("(?=.*Comb)(?=.*Coal)", scc$EI.Sector, perl = T), "SCC"])
 
-# aggregate emissions by state and year
-# for state codes 01 ... 56, see http://www.epa.gov/envirofw/html/codes/state.html
+# aggregate emissions for each year by state
+# only for state codes 01 ... 56, see http://www.epa.gov/envirofw/html/codes/state.html
 totals <- nei %>%
     filter(SCC %in% coalscc) %>%
     mutate(state = as.integer(substr(fips, 1, 2))) %>%
@@ -46,12 +46,12 @@ png(filename = "plot4d.png", width = 640, height = 480, units = "px")
 attach(totals)
 g <- ggplot(data = totals, aes(state, total))
 g + geom_point(aes(color = year, shape = year), size = 3) +
-    geom_smooth(method = "loess", se = FALSE, aes(group = year, color = year)) +
+    # geom_smooth(method = lm, se = FALSE, aes(group = year, color = year)) +
     theme_light(base_family = "Avenir", base_size = 11) +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    theme(axis.text.x = element_text(angle = 90)) +
     scale_shape_manual(values = c(15, 17, 18, 19)) +
     scale_color_brewer(palette = "Set1") +
-    scale_x_discrete(name = "State") +
+    scale_x_discrete(name = "State Code (from fips)") +
     scale_y_continuous(name = "Emissions (thousands tons)", breaks = pretty_breaks(n=10)) +
     labs(shape = "Year", color = "Year") +
     ggtitle(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"))
