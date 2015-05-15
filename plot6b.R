@@ -38,7 +38,7 @@ g <- ggplot(totals, aes(x = year, y = mean)) +
     geom_point(size = 4) +
     scale_x_continuous(name = "Year of Emissions", breaks = totals$year) +
     labs(y = "Mean Emissions (tons)") +
-    ggtitle(expression(PM[2.5] * " Emissions from motor vehicle sources by county"))
+    ggtitle(expression(PM[2.5] * " Mean Emissions from Motor Vehicle Sources selected locations"))
 g + facet_grid(fips ~ ., scales = "free")
 detach(totals)
 dev.off()

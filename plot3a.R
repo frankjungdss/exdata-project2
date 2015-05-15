@@ -31,7 +31,7 @@ totals <- transform(totals, type = factor(tolower(type)))
 # points
 png(filename = "plot3a.png", width = 640, height = 480, units = "px")
 g <- ggplot(data = totals, aes(year, total))
-g + geom_point(aes(color = type, shape = type), size = 5) +
+g + geom_point(aes(color = type, shape = type), size = 3) +
     scale_shape_manual(values = c(15, 17, 18, 19)) +
     geom_smooth(method = "lm", se = FALSE, aes(color = type)) +
     theme_light(base_family = "Avenir", base_size = 11) +

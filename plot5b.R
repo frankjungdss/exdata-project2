@@ -6,9 +6,6 @@
 # Baltimore City?
 #
 # Baltimore City, Maryland: `fips` == "24510"
-#
-# Include only mobile motor vehicle sources:
-# vehiclescc <- scc[grepl("Mobile", scc$EI.Sector), c("SCC", "Data.Category", "EI.Sector", "Short.Name")]
 
 library(dplyr)
 library(ggplot2)
