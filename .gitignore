@@ -1,6 +1,7 @@
 *.csv
 data/
 *.html
+*.png
 project1.Rproj
 .RData
 *.rds

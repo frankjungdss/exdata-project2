@@ -1,6 +1,6 @@
 #!/usr/bin/R --verbose --quiet
 
-# PLOT 6b
+# PLOT 6c
 
 # Compare emissions from motor vehicle sources in Baltimore City with emissions
 # from motor vehicle sources in Los Angeles County, California.
@@ -19,27 +19,28 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 # get SCC (source code classification) digits for motor vehicle sources
 vehiclescc <- as.character(scc[grepl("(?=.*Mobile - )(?=.*-Road)", scc$EI.Sector, perl = T), "SCC"])
 
-# aggregate emissions by year by county and type
+# scale emissions by year by county and type
 totals <- nei %>%
     filter(fips == "06037" | fips == "24510") %>%
     filter(SCC %in% vehiclescc) %>%
     select(year, fips, Emissions) %>%
     arrange(year, fips) %>%
     group_by(year, fips) %>%
-    summarise(mean = mean(Emissions), sd = sd(Emissions))
-totals$fips <- factor(totals$fips, labels = c("Los Angeles County", "Baltimore City"))
+    summarise(total = sum(Emissions))
 
-# points
-png(filename = "plot6b.png", width = 640, height = 480, units = "px")
+totals <- transform(totals, scale = scale(total),
+                    fips = factor(fips, labels = c("Los Angeles County", "Baltimore City")))
+
+png(filename = "plot6c.png", width = 640, height = 480, units = "px")
 attach(totals)
-g <- ggplot(totals, aes(x = year, y = mean)) +
-    geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd), width = .2) +
-    # geom_smooth(method = lm, se = FALSE) +
-    geom_point(size = 4) +
-    scale_x_continuous(name = "Year", breaks = totals$year) +
-    labs(y = "Mean Emissions (tons)") +
-    ggtitle(expression(PM[2.5] * " Mean Emissions from Motor Vehicle Sources selected locations"))
-g + facet_grid(fips ~ ., scales = "free")
+g <- ggplot(data = totals, aes(year, scale))
+g + geom_point(aes(color = fips), size = 3) +
+    theme_light(base_family = "Avenir", base_size = 11) +
+    geom_smooth(method = "lm", se = TRUE, aes(color = fips)) +
+    scale_color_brewer(palette = "Set1") +
+    scale_x_continuous(name = "Year", breaks = year) +
+    labs(y = "Total Emissions (normalised)") +
+    ggtitle(expression(PM[2.5] * " Scaled Emissions from Motor Vehicle Sources selected locations"))
 detach(totals)
 dev.off()
 

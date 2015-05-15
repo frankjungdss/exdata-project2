@@ -20,11 +20,11 @@ totals <- nei %>%
 # report total emissions in millions of tons
 totals <- transform(totals, total = total / 10^6)
 
-# bar chart
-png(filename = "plot1a.png", width=480, height=480, units="px")
+# plot bar chart
+png(filename = "plot1a.png", width = 480, height = 480, units = "px")
 x <- with(totals, barplot(total, width = 4, names.arg = year, las = 1, yaxs = "i"))
 with(totals, text(x, total, labels = round(total, 2), pos = 1, offset = 0.5))
-title(xlab = "Year of Emissions")
+title(xlab = "Year")
 title(ylab = "Total Emissions (millions tons)")
 title(main = expression(PM[2.5] * " Total Emissions for all Sources"))
 dev.off()

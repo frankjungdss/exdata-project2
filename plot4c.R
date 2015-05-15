@@ -34,21 +34,22 @@ totals <- nei %>%
     group_by(year) %>%
     summarise(mean = mean(Emissions), sd = sd(Emissions))
 
+# multi-plot
 png(filename = "plot4c.png", width = 640, height = 480, units = "px")
 attach(totals)
 par(mfrow = c(1, 2), mar = c(4, 5, 1, 1), oma = c(0, 0, 2, 0))
-# means
+# plot means
 plot(mean ~ year, totals,
-     xaxt = "n", xlab = "Year of Emissions", ylab = "Mean Emissions (tons)")
+     xaxt = "n", xlab = "Year", ylab = "Mean Emissions (tons)")
 axis(1, at = year)
 abline(lm(mean ~ year, totals), lty = 3, lwd = 2)
-# deviations from mean
+# plot deviations from mean
 plot(mean ~ year, totals,
-     xaxt = "n", xlab = "Year of Emissions", ylab = "Deviation from Mean Emissions (tons)",
-     ylim=c(min(mean - sd), max(mean + sd)))
+     xaxt = "n", xlab = "Year",
+     ylab = "Deviation from Mean Emissions (tons)", ylim = c(min(mean - sd), max(mean + sd)))
 lines(rbind(year, year, NA), rbind(mean - sd, mean + sd, NA))
 axis(1, at = year)
-title(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"), outer = TRUE)
+title(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"), outer = T)
 detach(totals)
 dev.off()
 
