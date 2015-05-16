@@ -13,10 +13,10 @@ totals <- aggregate(Emissions ~ year, data = subset(nei, fips == "24510"), sum)
 
 png(filename = "plot2a.png", width = 480, height = 480, units = "px")
 attach(totals)
-plot(year, Emissions, type = "b", xaxt = "n", xlab = "Year", ylab = "Total Emissions (tons)")
+plot(year, Emissions, type = "b", xaxt = "n", xlab = "Year", ylab = "Emissions (Tons)")
 axis(1, at = year)
 abline(lm(Emissions ~ year, totals), lty = 3, lwd = 2)
-title(main = expression("Baltimore City, Maryland: " * PM[2.5] * " Total Emissions for all Sources")
+title(main = expression("Baltimore City, Maryland: " * PM[2.5] * " Emissions from all Sources"))
 detach(totals)
 dev.off()
 

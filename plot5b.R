@@ -27,15 +27,18 @@ totals <- nei %>%
     summarise(total = sum(Emissions))
 totals <- transform(totals, type = factor(tolower(type)))
 
-# plot bar graph
+# plot points
 png(filename = "plot5b.png", width = 640, height = 480, units = "px")
 attach(totals)
-g <- ggplot(data = totals, aes(year, total, fill = type))
-g + geom_bar(stat = "identity", position = "stack") +
+g <- ggplot(data = totals, aes(year, total, group = type, color = type))
+g + geom_point(aes(shape = type), size = 3) +
+    geom_line() +
     theme_light(base_family = "Avenir", base_size = 11) +
-    scale_fill_brewer(name = "Emission Source Type", palette = "Set1") +
+    # geom_smooth(method = "lm", se = FALSE, aes(color = type)) +
+    scale_color_brewer(palette = "Set1") +
     scale_x_continuous(name = "Year", breaks = year) +
-    scale_y_continuous(name = "Total Emissions (tons)", breaks = pretty_breaks(n = 10)) +
+    scale_y_continuous(name = "Emissions (Tons)", breaks = pretty_breaks(n = 10)) +
+    labs(color = "Emission Source Type", shape = "Emission Source Type") +
     ggtitle(expression("Baltimore City, Maryland:" * PM[2.5] * " Emissions from Motor Vehicle Sources"))
 detach(totals)
 dev.off()

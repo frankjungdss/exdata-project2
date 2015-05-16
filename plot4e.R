@@ -14,8 +14,7 @@
 # [2] "Fuel Comb - Industrial Boilers, ICEs - Coal"
 # [3] "Fuel Comb - Comm/Institutional - Coal"
 #
-# State Codes (first 2 digits of fips)
-# http://www.epa.gov/envirofw/html/codes/state.html
+# So need to get all SCC codes that fall into these EI sectors.
 
 library(dplyr)
 library(ggplot2)
@@ -27,29 +26,28 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 # get SCC (source code classification) digits for coal combustion related sources
 coalscc <- as.character(scc[grepl("(?=.*Comb)(?=.*Coal)", scc$EI.Sector, perl = T), "SCC"])
 
-# aggregate emissions for each year by state
-# only for state codes 01 ... 56, see http://www.epa.gov/envirofw/html/codes/state.html
+# aggregate emissions by year
 totals <- nei %>%
     filter(SCC %in% coalscc) %>%
-    mutate(state = as.integer(substr(fips, 1, 2))) %>%
-    filter(state < 56) %>%
-    select(year, state, Emissions) %>%
-    arrange(year, state) %>%
-    group_by(year, state) %>%
+    select(year, type, Emissions) %>%
+    arrange(year, type) %>%
+    group_by(year, type) %>%
     summarise(total = sum(Emissions))
-totals <- transform(totals, state = factor(state), total = total / 1000, year = factor(year))
 
+# report total emissions in thousands of tons, lowercase type for legend
+totals <- transform(totals, total = total / 10^3, type = factor(tolower(type)))
+
+# plot bar graph
 png(filename = "plot4e.png", width = 640, height = 480, units = "px")
 attach(totals)
-g <- ggplot(data = totals, aes(x = total))
-g + geom_density(aes(group = year, color = year), size = 1) +
+g <- ggplot(data = totals, aes(year, total, fill = type))
+g + geom_bar(stat = "identity", position = "stack") +
     theme_light(base_family = "Avenir", base_size = 11) +
-    scale_color_brewer(palette = "Set1") +
-    xlab(label = "By State Emission (thousands tons)") +
-    scale_y_continuous(name = "Emission Relative Density") +
-    labs(color = "Year") +
-    ggtitle(expression("United States: " * PM[2.5] * " Emissions Density from Coal Combustion Related Sources by State"))
+    scale_fill_brewer(name = "Emission Source Type", palette = "Set1") +
+    scale_x_continuous(name = "Year", breaks = year) +
+    scale_y_continuous(name = "Emissions (thousands Tons)", breaks = pretty_breaks(n = 10)) +
+    ggtitle(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"))
 detach(totals)
 dev.off()
 
-rm(g, coalscc, totals)
+rm(coalscc, g, totals)

@@ -39,8 +39,8 @@ g + geom_point(aes(shape = type), size = 3) +
     scale_color_brewer(palette = "Set1") +
     scale_x_continuous(name = "Year", breaks = totals$year) +
     labs(shape = "Emission Source Type", color = "Emission Source Type") +
-    labs(y = "Total Emissions (tons)") +
-    ggtitle(expression("Baltimore City, Maryland: " * PM[2.5] * " Total Emissions by Source Type"))
+    labs(y = "Emissions (Tons)") +
+    ggtitle(expression("Baltimore City, Maryland: " * PM[2.5] * " Emissions by Source Type"))
 dev.off()
 
 rm(g, totals)
