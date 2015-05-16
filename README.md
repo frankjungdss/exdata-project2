@@ -44,11 +44,6 @@ have been decreasing from 1999 to 2008.
 
 [source (plot2a.R)](plot2a.R)
 
-### (b)
-![PM[2.5] Emission totals for Baltimore City, Maryland](plot2b.png)
-
-[source (plot2b.R)](plot2b.R)
-
 Plot 3
 ======
 
