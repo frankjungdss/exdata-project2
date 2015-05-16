@@ -1,15 +1,10 @@
-CONTENTS
-========
-
-* [Plot 1](README.md#plot 1)
-* [Plot 2](README.md#plot 2)
-* [Plot 3](README.md#plot 3)
-* [Plot 4](README.md#plot 4)
-* [Plot 5](README.md#plot 5)
-* [Plot 6](README.md#plot 6)
-* [Resources](README.md#resources)
-
------
+---
+output:
+  html_document:
+    fig_caption: yes
+    keep_md: yes
+    toc: yes
+---
 
 Plot 1
 ======
@@ -48,6 +43,11 @@ have been decreasing from 1999 to 2008.
 ![PM[2.5] Emission totals for Baltimore City, Maryland](plot2a.png)
 
 [source (plot2a.R)](plot2a.R)
+
+### (b)
+![PM[2.5] Emission totals for Baltimore City, Maryland](plot2b.png)
+
+[source (plot2b.R)](plot2b.R)
 
 Plot 3
 ======
