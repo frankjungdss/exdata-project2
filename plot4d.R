@@ -41,9 +41,9 @@ totals <- transform(totals, state = factor(state), total = total / 10^3, year = 
 
 png(filename = "plot4d.png", width = 640, height = 480, units = "px")
 attach(totals)
-g <- ggplot(data = totals, aes(state, total))
-g + geom_point(size = 3, aes(color = year, shape = year)) +
-    # geom_smooth(method = lm, se = FALSE, aes(group = year, color = year)) +
+g <- ggplot(data = totals, aes(state, total, group = year, color = year))
+g + geom_point(size = 3, aes(shape = year)) +
+    geom_line() +
     theme_light(base_family = "Avenir", base_size = 11) +
     theme(axis.text.x = element_text(angle = 90)) +
     scale_shape_manual(values = c(15, 17, 18, 19)) +

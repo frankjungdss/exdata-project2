@@ -40,14 +40,14 @@ totals <- transform(totals, total = total / 1000, type = factor(tolower(type)))
 # plot points
 png(filename = "plot4b.png", width = 640, height = 480, units = "px")
 attach(totals)
-g <- ggplot(data = totals, aes(year, total))
-g + geom_point(aes(color = type), size = 4) +
-    # geom_smooth(method = "lm", se = FALSE, aes(colour = type)) +
+g <- ggplot(data = totals, aes(year, total, group = type, colour = type))
+g + geom_point(aes(shape = type), size = 4) +
+    geom_line() +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_color_brewer(palette = "Set1") +
     scale_x_continuous(name = "Year", breaks = year) +
     scale_y_continuous(name = "Total Emissions (thousands tons)", breaks = pretty_breaks(n = 10)) +
-    labs(color = "Emission Source Type") +
+    labs(color = "Emission Source Type", shape = "Emission Source Type") +
     ggtitle(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"))
 detach(totals)
 dev.off()
