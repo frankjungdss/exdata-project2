@@ -30,8 +30,9 @@ totals <- transform(totals, type = factor(tolower(type)))
 
 # points
 png(filename = "plot3a.png", width = 640, height = 480, units = "px")
-g <- ggplot(data = totals, aes(year, total, group = type, color = type))
-g + geom_point(aes(shape = type), size = 3) +
+totals %>%
+    ggplot(aes(year, total, group = type, color = type)) +
+    geom_point(aes(shape = type), size = 3) +
     scale_shape_manual(values = c(15, 17, 18, 19)) +
     geom_line() +
     geom_smooth(method = "lm", se = FALSE, linetype = 3, aes(color = type)) +
@@ -43,4 +44,4 @@ g + geom_point(aes(shape = type), size = 3) +
     ggtitle(expression("Baltimore City, Maryland: " * PM[2.5] * " Emissions by Source Type"))
 dev.off()
 
-rm(g, totals)
+rm(totals)

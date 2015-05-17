@@ -29,15 +29,14 @@ totals <- transform(totals, type = factor(tolower(type)))
 
 # plot bar graph
 png(filename = "plot5a.png", width = 640, height = 480, units = "px")
-attach(totals)
-g <- ggplot(data = totals, aes(year, total, fill = type))
-g + geom_bar(stat = "identity", position = "stack") +
+totals %>%
+    ggplot(aes(year, total, fill = type)) +
+    geom_bar(stat = "identity", position = "stack") +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_fill_brewer(name = "Emission Source Type", palette = "Set1") +
-    scale_x_continuous(name = "Year", breaks = year) +
+    scale_x_continuous(name = "Year", breaks = totals$year) +
     scale_y_continuous(name = "Emissions (Tons)", breaks = pretty_breaks(n = 10)) +
     ggtitle(expression("Baltimore City, Maryland:" * PM[2.5] * " Emissions from Motor Vehicle Sources"))
-detach(totals)
 dev.off()
 
-rm(g, totals, vehiclescc)
+rm(totals, vehiclescc)

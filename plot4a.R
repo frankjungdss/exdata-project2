@@ -40,16 +40,15 @@ totals <- nei %>%
 totals <- transform(totals, state = factor(state), year = factor(year))
 
 png(filename = "plot4a.png", width = 640, height = 480, units = "px")
-attach(totals)
-g <- ggplot(data = totals, aes(x = total/1000))
-g + geom_density(aes(group = year, color = year), size = 1) +
+totals %>%
+    ggplot(aes(x = total/1000)) +
+    geom_density(aes(group = year, color = year), size = 1) +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_color_brewer(palette = "Set1") +
     xlab(label = "State Emissions (thousands Tons)") +
     scale_y_continuous(name = "State Emission Relative Density") +
     labs(color = "Year") +
     ggtitle(expression("United States: " * PM[2.5] * " State Emissions Density from Coal Combustion Related Sources"))
-detach(totals)
 dev.off()
 
-rm(g, coalscc, totals)
+rm(coalscc, totals)
