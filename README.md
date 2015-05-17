@@ -144,11 +144,12 @@ Los Angeles County has seen seen the greatest fluctuation in emissions.
 Resources
 =========
 
+* [An easy way to start using R in your research exploratory data analysis](http://bitesizebio.com/19666/an-easy-way-to-start-using-r-in-your-research-exploratory-data-analysis/)
 * [EPA Emission Basics](http://www.epa.gov/air/emissions/basic.htm)
 * [EPA FIPS State Codes](http://www.epa.gov/envirofw/html/codes/state.html)
-* [ggplot2 Bar and line graphs](http://www.cookbook-r.com/Graphs/Bar_and_line_graphs_(ggplot2)/)
-* [Project Data Set](https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip) [29Mb]
 * [EPA Inventory Data](http://www.epa.gov/ttn/chief/net/2002inventory.html#inventorydata)
 * [EPA National Emissions Inventory web site](http://www.epa.gov/ttn/chief/eiinformation.html)
+* [ggplot2 bar and line graphs](http://www.cookbook-r.com/Graphs/Bar_and_line_graphs_(ggplot2)/)
+* [ggplot2 shapes](http://sape.inf.usi.ch/quick-reference/ggplot2/shape)
 * [Plot hints](https://www.stat.auckland.ac.nz/~paul/RGraphics/chapter3.html)
-* [An easy way to start using R in your research exploratory data analysis](http://bitesizebio.com/19666/an-easy-way-to-start-using-r-in-your-research-exploratory-data-analysis/)
+* [Project Data Set](https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip) [29Mb]
