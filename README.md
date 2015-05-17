@@ -4,6 +4,8 @@ output:
     fig_caption: yes
     keep_md: yes
     toc: yes
+  pdf_document:
+    toc: yes
 ---
 
 Plot 1

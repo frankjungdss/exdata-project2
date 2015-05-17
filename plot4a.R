@@ -46,9 +46,9 @@ g + geom_density(aes(group = year, color = year), size = 1) +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_color_brewer(palette = "Set1") +
     xlab(label = "State Emissions (thousands Tons)") +
-    scale_y_continuous(name = "Emission Relative Density") +
+    scale_y_continuous(name = "State Emission Relative Density") +
     labs(color = "Year") +
-    ggtitle(expression("United States: " * PM[2.5] * " Emissions Density from Coal Combustion Related Sources by State"))
+    ggtitle(expression("United States: " * PM[2.5] * " State Emissions Density from Coal Combustion Related Sources"))
 detach(totals)
 dev.off()
 
