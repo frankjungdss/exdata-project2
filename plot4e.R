@@ -34,20 +34,17 @@ totals <- nei %>%
     group_by(year, type) %>%
     summarise(total = sum(Emissions))
 
-# report total emissions in thousands of tons, lowercase type for legend
-totals <- transform(totals, total = total / 10^3, type = factor(tolower(type)))
-
 # plot bar graph
+# report total emissions in thousands of tons, lowercase type for legend
 png(filename = "plot4e.png", width = 640, height = 480, units = "px")
-attach(totals)
-g <- ggplot(data = totals, aes(year, total, fill = type))
-g + geom_bar(stat = "identity", position = "stack") +
+totals %>%
+    ggplot(aes(year, total/1000, fill = tolower(type))) +
+    geom_bar(stat = "identity", position = "stack") +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_fill_brewer(name = "Emission Source Type", palette = "Set1") +
-    scale_x_continuous(name = "Year", breaks = year) +
+    scale_x_continuous(name = "Year", breaks = totals$year) +
     scale_y_continuous(name = "Emissions (thousands Tons)", breaks = pretty_breaks(n = 10)) +
     ggtitle(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"))
-detach(totals)
 dev.off()
 
-rm(coalscc, g, totals)
+rm(coalscc, totals)

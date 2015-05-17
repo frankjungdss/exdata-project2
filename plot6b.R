@@ -31,16 +31,14 @@ totals$fips <- factor(totals$fips, labels = c("Los Angeles County", "Baltimore C
 
 # points
 png(filename = "plot6b.png", width = 640, height = 480, units = "px")
-attach(totals)
-g <- ggplot(totals, aes(x = year, y = mean)) +
-    geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd), width = .2) +
-    # geom_smooth(method = lm, se = FALSE) +
+totals %>%
+    ggplot(aes(year, mean)) +
     geom_point(size = 4) +
-    scale_x_continuous(name = "Year", breaks = totals$year) +
+    geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd), width = .2) +
+    scale_x_continuous("Year", breaks = totals$year) +
     labs(y = "Mean Emissions (Tons)") +
-    ggtitle(expression(PM[2.5] * " Mean Emissions from Motor Vehicle Sources selected locations"))
-g + facet_grid(fips ~ ., scales = "free")
-detach(totals)
+    ggtitle(expression(PM[2.5] * " Mean Emissions from Motor Vehicle Sources selected locations")) +
+    facet_grid(fips ~ ., scales = "free")
 dev.off()
 
-rm(g, totals, vehiclescc)
+rm(totals, vehiclescc)

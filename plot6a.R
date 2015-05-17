@@ -37,7 +37,7 @@ totals %>%
     theme_light(base_family = "Avenir", base_size = 11) +
     geom_smooth(method = "lm", se = TRUE, aes(color = fips)) +
     scale_color_brewer(palette = "Set1") +
-    scale_x_continuous(name = "Year", breaks = totals$year) +
+    scale_x_continuous("Year", breaks = totals$year) +
     labs(y = "Relative Emissions (normalised)", color = "County", shape = "County") +
     ggtitle(expression(PM[2.5] * " Relative Emissions from Motor Vehicle Sources"))
 dev.off()

@@ -32,15 +32,15 @@ totals <- transform(totals, type = factor(tolower(type)))
 png(filename = "plot3a.png", width = 640, height = 480, units = "px")
 totals %>%
     ggplot(aes(year, total, group = type, color = type)) +
-    geom_point(aes(shape = type), size = 3) +
-    scale_shape_manual(values = c(15, 17, 18, 19)) +
     geom_line() +
     geom_smooth(method = "lm", se = FALSE, linetype = 3, aes(color = type)) +
-    theme_light(base_family = "Avenir", base_size = 11) +
     scale_color_brewer(palette = "Set1") +
-    scale_x_continuous(name = "Year", breaks = totals$year) +
+    geom_point(aes(shape = type), size = 3) +
+    scale_shape_manual(values = c(15, 17, 18, 19)) +
+    theme_light(base_family = "Avenir", base_size = 11) +
+    scale_x_continuous("Year", breaks = totals$year) +
+    scale_y_continuous("Emissions (Tons)") +
     labs(shape = "Emission Source Type", color = "Emission Source Type") +
-    labs(y = "Emissions (Tons)") +
     ggtitle(expression("Baltimore City, Maryland: " * PM[2.5] * " Emissions by Source Type"))
 dev.off()
 
