@@ -28,12 +28,11 @@ totals <- nei %>%
     group_by(year, fips) %>%
     summarise(total = sum(Emissions))
 
-totals <- transform(totals, scale = scale(total),
-                    fips = factor(fips, labels = c("Los Angeles County", "Baltimore City")))
+totals <- transform(totals, fips = factor(fips, labels = c("Los Angeles County", "Baltimore City")))
 
 png(filename = "plot6a.png", width = 640, height = 480, units = "px")
 attach(totals)
-g <- ggplot(data = totals, aes(year, scale, group = fips, color = fips))
+g <- ggplot(data = totals, aes(year, scale(total), group = fips, color = fips))
 g + geom_point(aes(color = fips, shape = fips), size = 3) +
     theme_light(base_family = "Avenir", base_size = 11) +
     geom_smooth(method = "lm", se = TRUE, aes(color = fips)) +
