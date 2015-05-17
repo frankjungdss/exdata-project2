@@ -37,11 +37,11 @@ totals <- nei %>%
     arrange(year, state) %>%
     group_by(year, state) %>%
     summarise(total = sum(Emissions))
-totals <- transform(totals, state = factor(state), total = total / 1000, year = factor(year))
+totals <- transform(totals, state = factor(state), year = factor(year))
 
 png(filename = "plot4a.png", width = 640, height = 480, units = "px")
 attach(totals)
-g <- ggplot(data = totals, aes(x = total))
+g <- ggplot(data = totals, aes(x = total/1000))
 g + geom_density(aes(group = year, color = year), size = 1) +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_color_brewer(palette = "Set1") +
