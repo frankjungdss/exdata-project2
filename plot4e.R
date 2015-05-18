@@ -38,7 +38,7 @@ totals <- nei %>%
 
 # plot bar graph
 # report total emissions in thousands of tons, lowercase type for legend
-png(filename = "plot4e.png", width = 640, height = 480, units = "px")
+png(filename = "plot4e.png", width = 720)
 totals %>%
     ggplot(aes(year, total/1000, fill = tolower(type))) +
     geom_bar(stat = "identity", position = "stack") +
