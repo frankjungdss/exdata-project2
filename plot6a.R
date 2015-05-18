@@ -28,17 +28,19 @@ totals <- nei %>%
     group_by(year, fips) %>%
     summarise(total = sum(Emissions))
 
-totals <- transform(totals, fips = factor(fips, labels = c("Los Angeles County", "Baltimore City")))
+totals <- transform(totals,
+                    fips = factor(fips, labels = c("Los Angeles County", "Baltimore City")),
+                    total = (total - min(total))/(max(total) - min(total)))
 
 png(filename = "plot6a.png", width = 640, height = 480, units = "px")
 totals %>%
-    ggplot(aes(year, scale(total), group = fips, color = fips)) +
+    ggplot(aes(year, total, group = fips, color = fips)) +
     geom_point(aes(color = fips, shape = fips), size = 3) +
     theme_light(base_family = "Avenir", base_size = 11) +
-    geom_smooth(method = "lm", se = TRUE, aes(color = fips)) +
+    geom_smooth(method = "lm", aes(color = fips)) +
     scale_color_brewer(palette = "Set1") +
     scale_x_continuous("Year", breaks = totals$year) +
-    labs(y = "Relative Emissions (normalised)", color = "County", shape = "County") +
+    labs(y = "Relative Emissions (normalized)", color = "County", shape = "County") +
     ggtitle(expression(PM[2.5] * " Relative Emissions from Motor Vehicle Sources"))
 dev.off()
 
