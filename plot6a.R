@@ -28,7 +28,7 @@ totals <- nei %>%
     group_by(year, fips) %>%
     summarise(total = sum(Emissions))
 
-# normalise so we can compare between counties
+# normalize so we can compare between counties
 totals <- transform(totals,
                     fips = factor(fips, labels = c("Los Angeles County", "Baltimore City")),
                     total = (total - min(total))/(max(total) - min(total)))
