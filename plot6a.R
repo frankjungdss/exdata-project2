@@ -19,7 +19,7 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 # get SCC (source code classification) digits for motor vehicle sources
 vehiclescc <- as.character(scc[grepl("(?=.*Mobile - )(?=.*-Road)", scc$EI.Sector, perl = T), "SCC"])
 
-# scale emissions by year by county and type
+# emissions by year by county and type
 totals <- nei %>%
     filter(fips == "06037" | fips == "24510") %>%
     filter(SCC %in% vehiclescc) %>%
@@ -28,11 +28,12 @@ totals <- nei %>%
     group_by(year, fips) %>%
     summarise(total = sum(Emissions))
 
+# normalise so we can compare between counties
 totals <- transform(totals,
                     fips = factor(fips, labels = c("Los Angeles County", "Baltimore City")),
                     total = (total - min(total))/(max(total) - min(total)))
 
-png(filename = "plot6a.png", width = 640, height = 480, units = "px")
+png(filename = "plot6a.png", width = 640)
 totals %>%
     ggplot(aes(year, total, group = fips, color = fips)) +
     geom_point(aes(color = fips, shape = fips), size = 3) +

@@ -25,7 +25,7 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
 
 # get SCC (source code classification) digits for coal combustion related sources
-coalscc <- as.character(scc[grepl("(?=.*Comb)(?=.*Coal)", scc$EI.Sector, perl = T), "SCC"])
+coalscc <- as.character(scc[grepl("(?=.*Coal)(?=.*Comb)", scc$EI.Sector, perl = T), "SCC"])
 
 # aggregate emissions for each year by state
 # only for state codes 01 ... 56, see http://www.epa.gov/envirofw/html/codes/state.html

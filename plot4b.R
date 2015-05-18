@@ -24,7 +24,7 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
 
 # get SCC (source code classification) digits for coal combustion related sources
-coalscc <- as.character(scc[grepl("(?=.*Comb)(?=.*Coal)", scc$EI.Sector, perl = T), "SCC"])
+coalscc <- as.character(scc[grepl("(?=.*Coal)(?=.*Comb)", scc$EI.Sector, perl = T), "SCC"])
 
 # aggregate emissions by year
 totals <- nei %>%
@@ -38,18 +38,17 @@ totals <- nei %>%
 totals <- transform(totals, total = total / 1000, type = factor(tolower(type)))
 
 # plot points
-png(filename = "plot4b.png", width = 640, height = 480, units = "px")
-attach(totals)
-g <- ggplot(data = totals, aes(year, total, group = type, colour = type))
-g + geom_point(aes(shape = type), size = 4) +
+png(filename = "plot4b.png", width = 640)
+totals %>%
+    ggplot(aes(year, total, group = type, colour = type)) +
+    geom_point(aes(shape = type), size = 4) +
     geom_line() +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_color_brewer(palette = "Set1") +
-    scale_x_continuous(name = "Year", breaks = year) +
-    scale_y_continuous(name = "Total Emissions (thousands tons)", breaks = pretty_breaks(n = 10)) +
+    scale_x_continuous(name = "Year", breaks = totals$year) +
+    scale_y_continuous(name = "Total Emissions (thousands Tons)", breaks = pretty_breaks(n = 10)) +
     labs(color = "Emission Source Type", shape = "Emission Source Type") +
     ggtitle(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"))
-detach(totals)
 dev.off()
 
 rm(coalscc, g, totals)

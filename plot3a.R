@@ -28,8 +28,8 @@ totals <- nei %>%
 # for legend lowercase the emissions source types
 totals <- transform(totals, type = factor(tolower(type)))
 
-# points
-png(filename = "plot3a.png", width = 640, height = 480, units = "px")
+# plot summary totals for each year by source type
+png(filename = "plot3a.png", width = 640)
 totals %>%
     ggplot(aes(year, total, group = type, color = type)) +
     geom_line() +

@@ -23,7 +23,7 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
 
 # get SCC (source code classification) digits for coal combustion related sources
-coalscc <- as.character(scc[grepl("(?=.*Comb)(?=.*Coal)", scc$EI.Sector, perl = T), "SCC"])
+coalscc <- as.character(scc[grepl("(?=.*Coal)(?=.*Comb)", scc$EI.Sector, perl = T), "SCC"])
 
 # mean emissions by year
 # aggregate emission by year
@@ -35,12 +35,11 @@ totals <- nei %>%
     summarise(mean = mean(Emissions), sd = sd(Emissions))
 
 # multi-plot
-png(filename = "plot4c.png", width = 640, height = 480, units = "px")
+png(filename = "plot4c.png", width = 720)
 attach(totals)
 par(mfrow = c(1, 2), mar = c(4, 5, 1, 1), oma = c(0, 0, 2, 0))
 # plot means
-plot(mean ~ year, totals,
-     xaxt = "n", xlab = "Year", ylab = "Mean Emissions (tons)")
+plot(mean ~ year, totals, xaxt = "n", xlab = "Year", ylab = "Mean Emissions (tons)")
 axis(1, at = year)
 abline(lm(mean ~ year, totals), lty = 3, lwd = 2)
 # plot deviations from mean
