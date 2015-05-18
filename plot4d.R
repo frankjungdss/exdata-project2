@@ -41,17 +41,14 @@ totals <- transform(totals, state = factor(state), total = total / 10^3, year = 
 
 png(filename = "plot4d.png", width = 640, height = 480, units = "px")
 totals %>%
-    ggplot(aes(state, total, group = year, fill = year)) +
-    # geom_point(size = 3, aes(shape = year)) +
-    # geom_line() +
+    ggplot(aes(state, total, fill = year)) +
     geom_bar(stat = "identity", position = "stack") +
     theme_light(base_family = "Avenir", base_size = 11) +
     theme(axis.text.x = element_text(angle = 90)) +
-    scale_shape_manual(values = c(15, 17, 18, 19)) +
     scale_color_brewer(palette = "Set1") +
     scale_x_discrete(name = "State Code (from fips)") +
     scale_y_continuous(name = "Emissions (thousands Tons)", breaks = pretty_breaks(n = 10)) +
-    labs(shape = "Year", color = "Year") +
+    labs(fill = "Year") +
     ggtitle(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"))
 dev.off()
 
