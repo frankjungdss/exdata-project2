@@ -35,7 +35,7 @@ cbp <- c("#000000", "#E69F00", "#56B4E9", "#009E73")
 totals <- nei %>%
     filter(SCC %in% coalscc) %>%
     mutate(state = as.integer(substr(fips, 1, 2))) %>%
-    filter(state < 56) %>%
+    filter(state < 57) %>%
     select(year, state, Emissions) %>%
     arrange(year, state) %>%
     group_by(year, state) %>%

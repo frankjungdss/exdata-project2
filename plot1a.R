@@ -11,7 +11,11 @@ library(dplyr)
 nei <- readRDS("data/summarySCC_PM25.rds")
 
 # aggregate emission by year
+# only for US so only state codes 01 ... 56
+# see http://www.epa.gov/envirofw/html/codes/state.html
 totals <- nei %>%
+    mutate(state = as.integer(substr(fips, 1, 2))) %>%
+    filter(state < 57) %>%
     select(year, Emissions) %>%
     arrange(year) %>%
     group_by(year) %>%
