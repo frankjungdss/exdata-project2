@@ -27,6 +27,9 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 # get SCC (source code classification) digits for coal combustion related sources
 coalscc <- as.character(scc[grepl("(?=.*Comb)(?=.*Coal)", scc$EI.Sector, perl = T), "SCC"])
 
+# colour blind palette
+cbp <- c("#000000", "#E69F00", "#56B4E9", "#009E73")
+
 # aggregate emissions for each year by state
 # only for state codes 01 ... 56, see http://www.epa.gov/envirofw/html/codes/state.html
 totals <- nei %>%
@@ -44,11 +47,11 @@ totals %>%
     ggplot(aes(x = total/1000)) +
     geom_density(aes(group = year, color = year)) +
     theme_light(base_family = "Avenir", base_size = 11) +
-    scale_color_brewer(palette = "Set1") +
+    scale_colour_manual(values = cbp) +
     xlab(label = "State Emissions (thousands Tons)") +
     scale_y_continuous("State Emission Relative Density") +
     labs(color = "Year") +
     ggtitle(expression("United States: " * PM[2.5] * " State Emissions Density from Coal Combustion Related Sources"))
 dev.off()
 
-rm(coalscc, totals)
+rm(cbp, coalscc, totals)
