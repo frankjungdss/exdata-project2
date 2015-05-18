@@ -32,7 +32,7 @@ coalscc <- as.character(scc[grepl("(?=.*Coal)(?=.*Comb)", scc$EI.Sector, perl = 
 totals <- nei %>%
     filter(SCC %in% coalscc) %>%
     mutate(state = as.integer(substr(fips, 1, 2))) %>%
-    filter(state < 56) %>%
+    filter(state < 57) %>%
     select(year, state, Emissions) %>%
     arrange(year, state) %>%
     group_by(year, state) %>%
