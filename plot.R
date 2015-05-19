@@ -9,11 +9,22 @@ while(dev.cur() != 1) dev.off()
 plot.new()
 
 #
-# Load data
+# Read data
 #
 
 scc <- readRDS("data/Source_Classification_Code.rds")
 nei <- readRDS("data/summarySCC_PM25.rds")      # National Emissions Inventory
+
+#
+# Save data
+#
+save(nei, file = "data/nei.RData", compress = TRUE)
+save(scc, file = "data/scc.RData", compress = TRUE)
+
+#
+# Load data
+load("data/nei.RData")
+load("data/scc.RData")
 
 #
 # EXPLORE
