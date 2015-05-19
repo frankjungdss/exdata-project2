@@ -25,7 +25,7 @@ totals <- nei %>%
 totals <- transform(totals, total = total / 10^6)
 
 # plot emission totals as bar chart
-png(filename = "plot1a.png")
+png(filename = "plot1a.png", width = 480, height = 480, units = "px")
 with(totals,
      barplot(total, width = 4, names.arg = year, las = 1, yaxs = "i") %>%
      text(total, labels = round(total, 2), pos = 1, offset = 0.5) +

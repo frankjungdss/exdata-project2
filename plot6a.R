@@ -33,7 +33,7 @@ totals <- transform(totals,
                     fips = factor(fips, labels = c("Los Angeles County", "Baltimore City")),
                     total = (total - min(total))/(max(total) - min(total)))
 
-png(filename = "plot6a.png", width = 640)
+png(filename = "plot6a.png", width = 640, height = 480, units = "px")
 totals %>%
     ggplot(aes(year, total, group = fips, color = fips)) +
     geom_point(aes(color = fips, shape = fips), size = 3) +

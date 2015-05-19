@@ -27,7 +27,7 @@ totals <- nei %>%
     summarise(total = sum(Emissions))
 
 # plot stacked bar graph for each year of emission source types totals
-png(filename = "plot5a.png", width = 640)
+png(filename = "plot5a.png", width = 640, height = 480, units = "px")
 totals %>%
     ggplot(aes(year, total, fill = tolower(type))) +
     geom_bar(stat = "identity", position = "stack") +

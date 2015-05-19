@@ -44,7 +44,7 @@ totals <- transform(totals, state = factor(state), year = factor(year))
 
 # use density to show probability of a states emission total in Tons
 # later years should show a higher likelihood of lower emissions
-png(filename = "plot4a.png", width = 640)
+png(filename = "plot4a.png", width = 640, height = 480, units = "px")
 totals %>%
     ggplot(aes(x = total/1000)) +
     geom_density(aes(group = year, color = year)) +

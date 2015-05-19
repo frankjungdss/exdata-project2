@@ -29,7 +29,7 @@ totals <- nei %>%
 totals <- transform(totals, type = factor(tolower(type)))
 
 # plot summary totals for each year by source type
-png(filename = "plot3a.png", width = 640)
+png(filename = "plot3a.png", width = 640, height = 480, units = "px")
 totals %>%
     ggplot(aes(year, total, group = type, color = type)) +
     geom_line() +
