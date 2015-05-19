@@ -91,11 +91,6 @@ emissions from coal combustion-related sources have remained static.
 
 [source (plot4d.R)](plot4d.R)
 
-### (4e)
-![](plot4e.png)
-
-[source (plot4e.R)](plot4e.R)
-
 Plot 5
 ======
 

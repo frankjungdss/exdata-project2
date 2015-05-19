@@ -15,9 +15,10 @@
 # [3] "Fuel Comb - Comm/Institutional - Coal"
 #
 # So need to get all SCC codes that fall into these EI sectors.
-# http://stackoverflow.com/questions/24626280/plot-mean-and-standard-deviation-by-category-in-r
 
 library(dplyr)
+library(ggplot2)
+library(scales)
 
 nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
@@ -25,31 +26,29 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 # get SCC (source code classification) digits for coal combustion related sources
 coalscc <- as.character(scc[grepl("(?=.*Coal)(?=.*Comb)", scc$EI.Sector, perl = T), "SCC"])
 
-# mean emissions by year
-# aggregate emission by year
+# by year and source type, calculate the coeffcient of variation (mean / std)
 totals <- nei %>%
     filter(SCC %in% coalscc) %>%
-    select(year, Emissions) %>%
-    arrange(year) %>%
-    group_by(year) %>%
-    summarise(mean = mean(Emissions), sd = sd(Emissions))
+    select(year, type, Emissions) %>%
+    arrange(year, type) %>%
+    group_by(year, type) %>%
+    summarise(total = mean(Emissions)/sd(Emissions))
 
-# multi-plot
-png(filename = "plot4c.png", width = 720)
-attach(totals)
-par(mfrow = c(1, 2), mar = c(4, 5, 1, 1), oma = c(0, 0, 2, 0))
-# plot means
-plot(mean ~ year, totals, xaxt = "n", xlab = "Year", ylab = "Mean Emissions (tons)")
-axis(1, at = year)
-abline(lm(mean ~ year, totals), lty = 3, lwd = 2)
-# plot deviations from mean
-plot(mean ~ year, totals,
-     xaxt = "n", xlab = "Year",
-     ylab = "Deviation from Mean Emissions (tons)", ylim = c(min(mean - sd), max(mean + sd)))
-lines(rbind(year, year, NA), rbind(mean - sd, mean + sd, NA))
-axis(1, at = year)
-title(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"), outer = T)
-detach(totals)
+# report use lowercase type for legend
+totals <- transform(totals, type = factor(tolower(type)))
+
+# plot variability by year
+png(filename = "plot4c.png", width = 640)
+totals %>%
+    ggplot(aes(year, total, group = type, colour = type)) +
+    geom_point(aes(shape = type), size = 4) +
+    geom_line() +
+    theme_light(base_family = "Avenir", base_size = 11) +
+    scale_color_brewer(palette = "Set1") +
+    scale_x_continuous(name = "Year", breaks = totals$year) +
+    scale_y_continuous(name = "Emissions CV (mean/sd)", breaks = pretty_breaks(n = 10)) +
+    labs(color = "Emission Source Type", shape = "Emission Source Type") +
+    ggtitle(expression("United States: " * PM[2.5] * " Variation of Emissions from Coal Combustion Related Sources"))
 dev.off()
 
 rm(coalscc, totals)
