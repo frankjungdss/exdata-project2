@@ -26,10 +26,6 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 # get SCC (source code classification) digits for coal combustion related sources
 coalscc <- as.character(scc[grepl("(?=.*Coal)(?=.*Comb)", scc$EI.Sector, perl = T), "SCC"])
 
-# use color blind friendly palette,
-# see http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette
-cbp <- c("#000000", "#E69F00", "#56B4E9", "#009E73")
-
 # aggregate emissions for each year by state
 # only for state codes 01 ... 56, see http://www.epa.gov/envirofw/html/codes/state.html
 totals <- nei %>%
@@ -41,6 +37,10 @@ totals <- nei %>%
     group_by(year, state) %>%
     summarise(total = sum(Emissions))
 totals <- transform(totals, state = factor(state), year = factor(year))
+
+# use color blind friendly palette,
+# see http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette
+cbp <- c("#000000", "#E69F00", "#56B4E9", "#009E73")
 
 # use density to show probability of a states emission total in Tons
 # later years should show a higher likelihood of lower emissions
