@@ -26,7 +26,7 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 # get SCC (source code classification) digits for coal combustion related sources
 coalscc <- as.character(scc[grepl("(?=.*Coal)(?=.*Comb)", scc$EI.Sector, perl = T), "SCC"])
 
-# by year and source type calculate coeffcient of variation (mean / std)
+# by year and source type, calculate the coeffcient of variation (mean / std)
 totals <- nei %>%
     filter(SCC %in% coalscc) %>%
     select(year, type, Emissions) %>%
@@ -34,7 +34,7 @@ totals <- nei %>%
     group_by(year, type) %>%
     summarise(total = mean(Emissions)/sd(Emissions))
 
-# report use lowercase type for legend,
+# report use lowercase type for legend
 totals <- transform(totals, type = factor(tolower(type)))
 
 # plot variability by year
