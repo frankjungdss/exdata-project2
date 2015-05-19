@@ -26,18 +26,18 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 # get SCC (source code classification) digits for coal combustion related sources
 coalscc <- as.character(scc[grepl("(?=.*Coal)(?=.*Comb)", scc$EI.Sector, perl = T), "SCC"])
 
-# aggregate emissions by year
+# by year and source type calculate coeffcient of variation (mean / std)
 totals <- nei %>%
     filter(SCC %in% coalscc) %>%
     select(year, type, Emissions) %>%
     arrange(year, type) %>%
     group_by(year, type) %>%
-    summarise(total = sum(Emissions))
+    summarise(total = mean(Emissions)/sd(Emissions))
 
-# report total emissions in thousands of tons, lowercase type for legend
-totals <- transform(totals, total = total / 1000, type = factor(tolower(type)))
+# report use lowercase type for legend,
+totals <- transform(totals, type = factor(tolower(type)))
 
-# plot points
+# plot variability by year
 png(filename = "plot4b.png", width = 640)
 totals %>%
     ggplot(aes(year, total, group = type, colour = type)) +
@@ -46,9 +46,9 @@ totals %>%
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_color_brewer(palette = "Set1") +
     scale_x_continuous(name = "Year", breaks = totals$year) +
-    scale_y_continuous(name = "Total Emissions (thousands Tons)", breaks = pretty_breaks(n = 10)) +
+    scale_y_continuous(name = "Emissions CV (mean/sd)", breaks = pretty_breaks(n = 10)) +
     labs(color = "Emission Source Type", shape = "Emission Source Type") +
-    ggtitle(expression("United States: " * PM[2.5] * " Emissions from Coal Combustion Related Sources"))
+    ggtitle(expression("United States: " * PM[2.5] * " Variation of Emissions from Coal Combustion Related Sources"))
 dev.off()
 
-rm(coalscc, g, totals)
+rm(coalscc, totals)
