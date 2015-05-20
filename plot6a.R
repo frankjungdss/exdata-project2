@@ -12,6 +12,7 @@
 
 library(dplyr)
 library(ggplot2)
+library(scales)
 
 nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
@@ -36,12 +37,13 @@ totals <- transform(totals,
 png(filename = "plot6a.png", width = 640, height = 480, units = "px")
 totals %>%
     ggplot(aes(year, total, group = fips, color = fips)) +
-    geom_point(aes(color = fips, shape = fips), size = 3) +
-    theme_light(base_family = "Avenir", base_size = 11) +
-    geom_smooth(method = "lm", aes(color = fips)) +
+    geom_point(aes(shape = fips), size = 3) +
+    geom_smooth(method = "lm") +
     scale_color_brewer(palette = "Set1") +
+    theme_light(base_family = "Avenir", base_size = 11) +
     scale_x_continuous("Year", breaks = totals$year) +
-    labs(y = "Relative Emissions (normalized)", color = "County", shape = "County") +
+    scale_y_continuous("Relative Emissions (normalized)", breaks = pretty_breaks(n = 10)) +
+    labs(color = "County", shape = "County") +
     ggtitle(expression(PM[2.5] * " Relative Emissions from Motor Vehicle Sources"))
 dev.off()
 
