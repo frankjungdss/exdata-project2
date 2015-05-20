@@ -50,8 +50,8 @@ xyplot(total ~ year | state,
        pch = 19,
        scales=list(x = list(rot=90)),
        xlab = "Year",
-       ylab = "Emissions (Tons)",
-       main = expression(PM[2.5] * " Emissions from Coal Combustion Sources by State"),
+       ylab = "Median Emissions (Tons)",
+       main = expression("United States " * PM[2.5] * " Emissions from Coal Combustion Sources by State"),
        panel = function(x, y, ...) {
            panel.xyplot(x, y, cex = 0.8, ...)
            panel.lmline(x, y, col = "red")
