@@ -1,11 +1,11 @@
 ---
+title: "README"
+author: "Frank Jung"
+date: "20/05/2015"
 output:
-  html_document:
-    fig_caption: yes
-    keep_md: yes
-    toc: yes
+  html_document: default
   pdf_document:
-    toc: yes
+    latex_engine: xelatex
 ---
 
 Plot 1
