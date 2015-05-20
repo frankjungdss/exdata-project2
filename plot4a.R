@@ -37,19 +37,10 @@ totals <- nei %>%
     arrange(year, state) %>%
     group_by(year, state) %>%
     summarise(total = median(Emissions))
-# normalise so we can compare relative changes between states
 totals <- transform(totals,
-                    year = factor(year, ordered = T),
                     state = factor(state, ordered = T),
-                    total = (total - min(total))/(max(total) - min(total)))
+                    year = factor(year, ordered = T))
 
-# for each state plot year ~ normalised emissions
-#
-# so why has Indiana (18) emissions been rising?
-# One reason given here http://www.sourcewatch.org/index.php/Mercury_and_coal
-# Which reported: In Indiana, coal-burning power plants emit more mercury to the
-# air each year than any other human activity.
-# Source: Joseph Picard, "Mercury plagues Indiana", International Business Times, November 17, 2010.
 png(filename = "plot4a.png", height = 720, width = 720, units = "px")
 attach(totals)
 xyplot(total ~ year | state,
@@ -59,8 +50,8 @@ xyplot(total ~ year | state,
        pch = 19,
        scales=list(x = list(rot=90)),
        xlab = "Year",
-       ylab = "Emissions (normalised)",
-       main = expression(PM[2.5] * " Relative Emissions from Coal Combustion Sources by State"),
+       ylab = "Emissions (Tons)",
+       main = expression(PM[2.5] * " Emissions from Coal Combustion Sources by State"),
        panel = function(x, y, ...) {
            panel.xyplot(x, y, cex = 0.8, ...)
            panel.lmline(x, y, col = "red")
