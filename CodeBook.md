@@ -1,10 +1,18 @@
-CodeBook
-========
-
-Introduction
-------------
-  information about the NEI at the [EPA National Emissions Inventory web site](http://www.epa.gov/ttn/chief/eiinformation.html).
 ---
+title: "CodeBook"
+author: "Frank Jung"
+date: "20/05/2015"
+output:
+  html_document: default
+  pdf_document:
+    fig_height: 5
+    fig_width: 7
+    latex_engine: xelatex
+---
+
+# Introduction
+
+Get information about the NEI from the [EPA National Emissions Inventory web site](http://www.epa.gov/ttn/chief/eiinformation.html).
 
 The data for this project is available from the course web site as a single zip
 file:
@@ -13,7 +21,9 @@ file:
 
 The zip file contains two files:
 
-### PM2.5 Emissions Data (`rsummarySCC_PM25.rds`)
+## PM2.5 Emissions Data 
+
+File: `summarySCC_PM25.rds`
 
 This file contains a data frame with all of the PM2.5 emissions data for 1999,
 2002, 2005, and 2008. For each year, the table contains number of tons of PM2.5
@@ -43,7 +53,9 @@ Load RDS data with
 nei <- readRDS("data/summarySCC_PM25.rds")
 ```
 
-### Source Classification Code Table (```Source_Classification_Code.rds```)
+## Source Classification Code Table
+
+File: `Source_Classification_Code.rds`
 
 This table provides a mapping from the SCC digit strings in the Emissions table
 to the actual name of the PM2.5 source. The sources are categorized in a few
@@ -57,10 +69,9 @@ Load RDS data with
 scc <- readRDS("data/Source_Classification_Code.rds")
 ```
 
-Notes
------
+# Notes
 
-### EIS sectors
+## EIS sectors
 
 One particularly large change from the traditional labeling of sectors and
 categories is for the EIS sectors "Mobile – Aircraft", "Mobile – Commercial
@@ -74,7 +85,7 @@ the historical grouping.
 
 Source: [2008_neiv3_tsd_draft.pdf](data/2008_neiv3_tsd_draft.pdf)
 
-### Mobile sources overview
+## Mobile sources overview
 
 Mobile sources are sources of pollution caused by vehicles transporting goods or people (e.g., highway vehicles,
 aircraft, rail, and marine vessels) and other nonroad engines and equipment, such as lawn and garden
