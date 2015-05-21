@@ -1,5 +1,7 @@
+CodeBook.pdf
 *.csv
 data/
+*.eps
 *.html
 project1.Rproj
 .RData
@@ -7,4 +9,3 @@ project1.Rproj
 .Rhistory
 .Rproj.user
 *.zip
-CodeBook.pdf
