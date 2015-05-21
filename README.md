@@ -3,9 +3,9 @@ title: "README"
 author: "Frank Jung"
 date: "20/05/2015"
 output:
+  html_document: default
   pdf_document:
     latex_engine: xelatex
-  html_document: default
 ---
 
 Plot 1
