@@ -24,7 +24,7 @@ totals <- nei %>%
     select(year, type, Emissions) %>%
     arrange(year, type) %>%
     group_by(year, type) %>%
-    summarise(total = sum(Emissions))
+    summarise(total = median(Emissions))
 totals <- transform(totals, type = factor(tolower(type)))
 
 # plot points
@@ -33,11 +33,10 @@ totals %>%
     ggplot(aes(year, total, group = type, color = type)) +
     geom_point(aes(shape = type), size = 3) +
     geom_line() +
-    theme_light(base_family = "Avenir", base_size = 11) +
     scale_color_brewer(palette = "Set1") +
     scale_x_continuous("Year", breaks = totals$year) +
-    scale_y_continuous("Emissions (Tons)", breaks = pretty_breaks(n = 10)) +
-    labs(color = "Emission Source Type", shape = "Emission Source Type") +
+    scale_y_continuous("Median Emissions (Tons)", breaks = pretty_breaks(n = 10)) +
+    labs(color = "Source Type", shape = "Source Type") +
     ggtitle(expression("Baltimore City, Maryland:" * PM[2.5] * " Emissions from Motor Vehicle Sources"))
 dev.off()
 
