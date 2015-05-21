@@ -12,6 +12,7 @@
 
 library(dplyr)
 library(ggplot2)
+library(scales)
 
 nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
@@ -19,26 +20,39 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 # get SCC (source code classification) digits for motor vehicle sources
 vehiclescc <- as.character(scc[grepl("(?=.*Mobile - )(?=.*-Road)", scc$EI.Sector, perl = T), "SCC"])
 
-# aggregate emissions by year by county and type
-totals <- nei %>%
-    filter(fips == "06037" | fips == "24510") %>%
+# standardise emissions for each county
+latotals <- nei %>%
+    filter(fips == "06037") %>%
     filter(SCC %in% vehiclescc) %>%
     select(year, fips, Emissions) %>%
     arrange(year, fips) %>%
     group_by(year, fips) %>%
-    summarise(mean = mean(Emissions), sd = sd(Emissions))
-totals$fips <- factor(totals$fips, labels = c("Los Angeles County", "Baltimore City"))
+    summarise(total = sum(Emissions))
+latotals <- transform(latotals, total = (total - min(total))/(max(total) - min(total)))
 
-# points
+bctotals <- nei %>%
+    filter(fips == "24510") %>%
+    filter(SCC %in% vehiclescc) %>%
+    select(year, fips, Emissions) %>%
+    arrange(year, fips) %>%
+    group_by(year, fips) %>%
+    summarise(total = sum(Emissions))
+bctotals <- transform(bctotals,total = (total - min(total))/(max(total) - min(total)))
+
+totals <- rbind(latotals, bctotals)
+totals$fips <- factor(totals$fips, labels = c("Los Angeles County, California", "Baltimore City, Maryland"))
+
 png(filename = "plot6b.png", width = 640, height = 480, units = "px")
 totals %>%
-    ggplot(aes(year, mean)) +
-    geom_point(size = 4) +
-    geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd), width = .2) +
+    ggplot(aes(year, total, group = fips, color = fips)) +
+    geom_point(aes(shape = fips), size = 3) +
+    geom_smooth(method = "lm") +
+    scale_color_brewer(palette = "Set1") +
+    theme_light(base_family = "Avenir", base_size = 11) +
     scale_x_continuous("Year", breaks = totals$year) +
-    labs(y = "Mean Emissions (Tons)") +
-    ggtitle(expression(PM[2.5] * " Mean Emissions from Motor Vehicle Sources selected locations")) +
-    facet_grid(fips ~ ., scales = "free")
+    scale_y_continuous("Relative Emissions (normalized)", breaks = pretty_breaks(n = 10)) +
+    labs(color = "County", shape = "County") +
+    ggtitle(expression(PM[2.5] * " Relative Emissions from Motor Vehicle Sources"))
 dev.off()
 
-rm(totals, vehiclescc)
+rm(bctotals, latotals, totals, vehiclescc)

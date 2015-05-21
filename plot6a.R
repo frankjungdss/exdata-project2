@@ -11,8 +11,6 @@
 # (b) Los Angeles County, California (fips == # "06037")
 
 library(dplyr)
-library(ggplot2)
-library(scales)
 
 nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
@@ -24,27 +22,17 @@ vehiclescc <- as.character(scc[grepl("(?=.*Mobile - )(?=.*-Road)", scc$EI.Sector
 totals <- nei %>%
     filter(fips == "06037" | fips == "24510") %>%
     filter(SCC %in% vehiclescc) %>%
-    select(year, fips, Emissions) %>%
-    arrange(year, fips) %>%
-    group_by(year, fips) %>%
-    summarise(total = sum(Emissions))
-
-# normalize so we can compare between counties
-totals <- transform(totals,
-                    fips = factor(fips, labels = c("Los Angeles County", "Baltimore City")),
-                    total = (total - min(total))/(max(total) - min(total)))
+    select(fips, Emissions) %>%
+    arrange(fips) %>%
+    group_by(fips)
+totals <- transform(totals, fips = factor(fips, labels = c("Los Angeles County, California", "Baltimore City, Maryland")))
 
 png(filename = "plot6a.png", width = 640, height = 480, units = "px")
-totals %>%
-    ggplot(aes(year, total, group = fips, color = fips)) +
-    geom_point(aes(shape = fips), size = 3) +
-    geom_smooth(method = "lm") +
-    scale_color_brewer(palette = "Set1") +
-    theme_light(base_family = "Avenir", base_size = 11) +
-    scale_x_continuous("Year", breaks = totals$year) +
-    scale_y_continuous("Relative Emissions (normalized)", breaks = pretty_breaks(n = 10)) +
-    labs(color = "County", shape = "County") +
-    ggtitle(expression(PM[2.5] * " Relative Emissions from Motor Vehicle Sources"))
+attach(totals)
+boxplot(log10(Emissions) ~ fips, data = totals, names.arg = fips)
+title(ylab = "log10 Emissions (Tons)")
+title(main = expression(PM[2.5] * " Emissions from Motor Vehicle Sources"))
+detach(totals)
 dev.off()
 
 rm(totals, vehiclescc)
