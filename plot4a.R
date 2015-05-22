@@ -41,6 +41,7 @@ totals <- transform(totals,
                     state = factor(state, ordered = T),
                     year = factor(year, ordered = T))
 
+# plot median as it smooths out influence of outliers
 png(filename = "plot4a.png", height = 720, width = 720, units = "px")
 attach(totals)
 xyplot(total ~ year | state,

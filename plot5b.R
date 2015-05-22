@@ -17,7 +17,7 @@ scc <- readRDS("data/Source_Classification_Code.rds")
 # get SCC (source code classification) digits for mobile sources
 vehiclescc <- as.character(scc[grepl("(?=.*Mobile - )(?=.*-Road)", scc$EI.Sector, perl = T), "SCC"])
 
-# aggregate emissions by year
+# get median of emissions by year
 totals <- nei %>%
     filter(fips == "24510") %>%
     filter(SCC %in% vehiclescc) %>%
@@ -27,7 +27,7 @@ totals <- nei %>%
     summarise(total = median(Emissions))
 totals <- transform(totals, type = factor(tolower(type)))
 
-# plot points
+# show median emissions to show trend for mobile (road and non-road) sources
 png(filename = "plot5b.png", width = 640, height = 480, units = "px")
 totals %>%
     ggplot(aes(year, total, group = type, color = type)) +
