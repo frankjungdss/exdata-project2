@@ -3,9 +3,9 @@ title: "README"
 author: "Frank Jung"
 date: "20/05/2015"
 output:
+  html_document: default
   pdf_document:
     latex_engine: xelatex
-  html_document: default
 ---
 
 Plot 1
@@ -135,6 +135,11 @@ Los Angeles County has seen seen the greatest fluctuation in emissions.
 ![](plot6c.png)
 
 [source (plot6c.R)](plot6c.R)
+
+### (6d)
+![](plot6d.png)
+
+[source (plot6d.R)](plot6d.R)
 
 Resources
 =========
