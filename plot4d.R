@@ -24,23 +24,25 @@ nei <- readRDS("data/summarySCC_PM25.rds")
 scc <- readRDS("data/Source_Classification_Code.rds")
 
 # get SCC (source code classification) digits for coal combustion related sources
-coalscc <- as.character(scc[grepl("(?=.*Comb)(?=.*Coal)", scc$EI.Sector, perl = T), "SCC"])
+coalscc <- scc[grepl("(?=.*Comb)(?=.*Coal)", scc$EI.Sector, perl = T), c("SCC", "EI.Sector")]
 
 # aggregate emissions by year
 totals <- nei %>%
-    filter(SCC %in% coalscc) %>%
-    mutate(state = as.integer(substr(fips, 1, 2))) %>%
-    filter(state < 57) %>%
-    select(year, type, Emissions) %>%
-    arrange(year, type) %>%
-    group_by(year, type) %>%
+    filter(SCC %in% coalscc$SCC) %>% # only coal scc for short inner join
+    filter(as.integer(substr(fips, 1, 2)) < 57) %>% # only US states
+    inner_join(y = coalscc, by = "SCC") %>% # will use ei.sector in chart
+    mutate(sector = sub("Fuel Comb - ", "", EI.Sector)) %>%
+    mutate(sector = sub(" - Coal", "", sector)) %>%
+    select(year, sector, Emissions) %>%
+    arrange(year, sector) %>%
+    group_by(year, sector) %>%
     summarise(total = sum(Emissions))
 
 # plot bar graph
 # report total emissions in thousands of tons, lowercase type for legend
 png(filename = "plot4d.png", width = 720)
 totals %>%
-    ggplot(aes(year, total/1000, fill = tolower(type))) +
+    ggplot(aes(year, total/1000, fill = sector)) +
     geom_bar(stat = "identity", position = "stack") +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_fill_brewer(name = "Emission Source Type", palette = "Set1") +
