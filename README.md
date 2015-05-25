@@ -141,6 +141,11 @@ Los Angeles County has seen seen the greatest fluctuation in emissions.
 
 [source (plot6d.R)](plot6d.R)
 
+### (6e)
+![](plot6e.png)
+
+[source (plot6d.R)](plot6d.R)
+
 Resources
 =========
 
