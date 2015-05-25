@@ -30,8 +30,11 @@ totals <- nei %>%
     group_by(year, fips) %>%
     summarise(total = sum(Emissions))
 
+# calculate percentage change by county
 totals$change = with(totals, ave(total, fips, FUN = Delt))
 totals[is.na(totals$change),]$change <- 0
+
+# factor for legend
 totals$fips <- factor(totals$fips, labels = c("Los Angeles County, California", "Baltimore City, Maryland"))
 
 png(filename = "plot6e.png", width = 640, height = 480, units = "px")
@@ -41,7 +44,7 @@ totals %>%
     scale_color_brewer(palette = "Set1") +
     theme_light(base_family = "Avenir", base_size = 11) +
     scale_x_continuous("Year", breaks = totals$year) +
-    scale_y_continuous("% Change in Emissions", labels = percent_format(), breaks = pretty_breaks(20)) +
+    scale_y_continuous("Relative Change in Emissions (%)", labels = percent_format(), breaks = pretty_breaks(20)) +
     labs(color = "County", shape = "County") +
     ggtitle(expression(PM[2.5] * " Percentage Change in Emissions from Motor Vehicle Sources"))
 dev.off()
